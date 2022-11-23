@@ -1,0 +1,108 @@
+.product__card {
+    border-color: #e4e4e4;
+    margin-bottom: 21px;
+    .card-header {
+        padding: 15px;
+        background-color: #fff;
+        border: none;
+        position: relative;
+    }
+    .card-body {
+        position: relative;
+        padding: 0 15px 15px;
+    }
+
+    .product__category {
+        margin-bottom: 8px;
+        font-size: 16px;
+        text-transform: capitalize;
+        color: $txt-main-color;
+        &:hover {
+            color: $main-color;
+        }
+    }
+    .product__name {
+        font-size: 20px;
+        color: $txt-main-color;
+        &:hover {
+            color: $main-color;
+        }
+    }
+    .product__wishlist {
+        position: absolute;
+        top: 0;
+        right: 15px;
+        i {
+            font-size: 20px;
+            color: #222;
+        }
+    }
+    .product__price {
+        margin-bottom: 0;
+        font-weight: 500;
+        font-size: 16px;
+        &-default {
+            color: #999;
+            text-decoration: line-through;
+        }
+        &-sale {
+            color: $main-color;
+        }
+    }
+    .product__flags {
+        position: absolute;
+        top: 30px;
+        left: 30px;
+        display: flex;
+        gap: 0 6px;
+        .product__flag {
+            display: inline-block;
+            padding: 3px 8px;
+            background-color: $main-color;
+            color: #fff;
+            font-weight: 500;
+            font-size: 12px;
+            border-radius: 2px;
+            &.new {
+                background-color: #222;
+            }
+        }
+    }
+
+    .product__addCart {
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+        right: 30px;   
+        transition: 0.25s all ease-in-out;
+        transform: translateY(20px);
+        opacity: 0;
+        visibility: hidden;
+        button {
+            outline: none;
+            background-color: #fff;
+            width: 100%;
+            border: none;
+            text-transform: uppercase;
+            font-weight: 500;
+            padding: 8px 20px;
+            transition: 0.25s all ease-in-out;
+            &:hover {
+                background-color: $main-color;
+                color: #fff;
+            }
+        }    
+    }
+    &:hover {
+        .product__addCart {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+        }
+    }
+}
+
+.boxNew {
+    margin-top: 80px;
+    
+}

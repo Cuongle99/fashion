@@ -1,0 +1,30 @@
+.blog__item {
+    padding: 0 10.5px;
+    .blog__content {
+        margin-top: 15px;
+    }
+
+    .blog__top {
+        display: flex;
+        justify-content: flex-start;
+        gap: 10px 20px;
+        margin-bottom: 10px;
+        font-size: 16px;
+        color: #222;
+        i {
+            font-size: 20px;
+            margin-right: 6px;
+        }
+        > div {
+            display: flex;
+        }
+    }
+    .blog__title {
+        font-size: 20px;
+        font-weight: 500;
+    }
+}
+
+.boxBlog {
+    margin-top: 80px;
+}

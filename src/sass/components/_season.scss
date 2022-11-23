@@ -1,0 +1,55 @@
+.season {
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 80px;
+    color: #fff;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-image: url('../../assets/images/banner6.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        z-index: -1;
+    }
+    &__title {
+        font-size: 60px;
+        font-weight: 700;
+        line-height: 1;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+    }
+
+    &__sub {
+        font-size: 16px;
+        line-height: 1;
+        text-transform: capitalize;
+        margin-bottom: 33px;
+    }
+
+    &__button {
+        display: inline-flex;
+        font-size: 14px;
+        padding: 20px 50px;
+        color: #222;
+        line-height: 1;
+        font-weight: 500;
+        text-transform: uppercase;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        transition: 0.25s all ease-in-out;
+        &:hover {
+            color: #fff;
+            background-color: #222;
+        }
+    }
+}

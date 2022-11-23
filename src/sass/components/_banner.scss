@@ -1,0 +1,18 @@
+.bannerHome {
+    margin-top: 80px;
+    margin-bottom: 80px;
+    .banner__item {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        position: relative;
+    }
+
+    .banner__content {
+        position: absolute;
+        bottom: 40px;
+        left: 30px;
+    }
+    .banner__sub-title {
+        margin-bottom: 20px;
+    }
+}

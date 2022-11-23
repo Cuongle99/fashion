@@ -1,0 +1,39 @@
+.footer {
+    margin-top: 80px;
+    border-top: 1px solid #e4e4e4;
+    .footer__content {
+        padding-top: 60px;
+        padding-bottom: 60px;
+        // border-top: 1px solid #e4e4e4;
+    }
+    .footer__list-item {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 30px;
+        a {
+            display: inline-flex;
+        }
+        i {
+            font-size: 22px;
+            margin-right: 8px;
+        }
+    }
+    .footer__bottom {
+        border-top: 1px solid #e4e4e4;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        p {
+            margin-bottom: 0;
+        }
+        .footer__card {
+            ul {
+                gap: 0 20px;
+                li {
+                    i {
+                        font-size: 30px;
+                    }
+                }
+            }
+        }
+    }
+}

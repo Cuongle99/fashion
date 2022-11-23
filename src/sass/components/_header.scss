@@ -1,0 +1,52 @@
+.header {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    .navbar-nav {
+        > .nav-item {
+            > a {
+                padding: 0.5rem 1.2rem;
+                display: inline-block;
+                color: $txt-main-color;
+                font-size: 14px;
+                text-transform: uppercase;
+                font-weight: 500;
+                transition: all 0.25s ease-in-out;
+                &:hover {
+                    color: $main-color;
+                }
+            }
+        }
+        .dropdown-menu {
+            padding: 20px;
+            &::before {
+                content: '';
+                position: absolute;
+                width: 100px;
+                height: 20px;
+                bottom: 100%;
+                left: 0;
+            }
+            .nav-item {
+                > a {
+                    font-size: 14px;
+                    line-height: 20px;
+                    padding: 5px 0;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    &__right {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0 25px;
+        &__item {
+            i {
+                font-size: 25px;
+                display: block;
+            }
+        }
+    }
+}
