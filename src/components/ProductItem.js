@@ -10,6 +10,8 @@ const numeral = require('numeral');
 export default function ProductItem(props) {
     const navigate = useNavigate();
 
+    console.log(props.data);
+
 
     return (
         <Card className="product__card">

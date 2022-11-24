@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Header from "../components/Header";
+import Footer from '../components/Footer'
+
 
 export default function Login() {
     const dispatch = useDispatch();
@@ -70,6 +72,8 @@ export default function Login() {
                     </div>
                 </Container>
             </div>
+            <Footer />
+            
         </>
     );
 }
