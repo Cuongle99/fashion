@@ -10,3 +10,8 @@ export const checkTime = (time) => {
 
     return timeDistance(timeUpload, today);
 }
+
+
+export const API_KEY = 'AIzaSyBmQ3yzN9nIF2DNVisudN5zYdqI_evNba4';
+
+
