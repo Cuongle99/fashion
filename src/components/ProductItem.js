@@ -10,12 +10,9 @@ const numeral = require('numeral');
 export default function ProductItem(props) {
     const navigate = useNavigate();
 
-    console.log(props.data);
-
-
     return (
         <Card className="product__card">
-            <Link to={"/product"} >
+            <Link to={`/products/${props.id}`} >
             <Card.Header>
                 <Card.Img variant="top" src={props.data.image} />
                 <div className="product__flags">

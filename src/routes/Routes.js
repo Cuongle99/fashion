@@ -4,6 +4,7 @@ import Login from "../components/Login";
 import Cart from "../pages/Cart";
 import Home from "../pages/Home";
 import Product from "../pages/Product";
+import ProductDetail from "../pages/ProductDetail";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
+  {
+    path: '/products/:productId',
+    element: <ProductDetail />,
+  }
 ]);
 
 export default function Routes() {

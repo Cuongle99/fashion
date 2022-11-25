@@ -57,7 +57,8 @@ export default function ProductBox() {
         
         <Slider {...settings_1} className='list'>
           {listProduct.data && Object.keys(listProduct.data).map((key) => {
-            return <ProductItem key={key}  data={listProduct.data[key]}/> 
+            
+            return <ProductItem key={key}  data={listProduct.data[key]} id={key}/> 
           })}
           </Slider>
       </Container>

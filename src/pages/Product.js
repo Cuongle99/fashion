@@ -11,31 +11,43 @@ import BackToTop from "../components/BackToTop";
 export default function Product() {
     const listProduct = useSelector((state) => state.productReducer);
     const dispatch = useDispatch();
+
+    const [productList, setProductList] = useState(
+        {
+            key: null,
+            value: null
+        }
+    )
+
     useEffect(() => {
         dispatch(getListProduct());
+        // Object.keys(listProduct.data).map(
+        //     (key) => setProductList({key: key, value: listProduct.data[key]})
+        // );
     });
 
-    const products = Object.keys(listProduct.data).map(
-        (key) => listProduct.data[key]
-    );
+    
 
-    const itemsPerPage = 9;
+    console.log(productList);
 
-    const [itemOffset, setItemOffset] = useState(0);
 
-    const endOffset = itemOffset + itemsPerPage;
-    const currentItems = products.slice(itemOffset, endOffset);
-    const pageCount = Math.ceil(products.length / itemsPerPage);
+    // const itemsPerPage = 9;
 
-    const handlePageClick = (event) => {
-        const newOffset = (event.selected * itemsPerPage) % products.length;
-        setItemOffset(newOffset);
-    };
+    // const [itemOffset, setItemOffset] = useState(0);
+
+    // const endOffset = itemOffset + itemsPerPage;
+    // const currentItems = products.slice(itemOffset, endOffset);
+    // const pageCount = Math.ceil(products.length / itemsPerPage);
+
+    // const handlePageClick = (event) => {
+    //     const newOffset = (event.selected * itemsPerPage) % products.length;
+    //     setItemOffset(newOffset);
+    // };
 
     return (
         <>
             <Header />
-            <div className="product_List_pages">
+            {/* <div className="product_List_pages">
                 <Container>
                     <Row>
                         <Col md={3}>
@@ -70,7 +82,7 @@ export default function Product() {
                         </Col>
                     </Row>
                 </Container>
-            </div>
+            </div> */}
             <Footer />
             <BackToTop />
         </>
