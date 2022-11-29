@@ -10,6 +10,15 @@ import BackToTop from "../components/BackToTop";
 
 export default function Product() {
     const listProduct = useSelector((state) => state.productReducer);
+    const dispatch = useDispatch();
+
+
+    console.log(listProduct);
+
+
+    useEffect(() => {
+        dispatch(getListProduct());
+    });
 
     const products = Object.entries(listProduct.data);
 

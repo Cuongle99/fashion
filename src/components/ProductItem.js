@@ -1,14 +1,50 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
 import { checkTime } from "../utils/constant";
+import { useDispatch, useSelector } from "react-redux";
+import { Modal } from "react-bootstrap";
+import {  addCart, favouriteProduct } from "../redux/Product/productSlice";
+import { customAxios } from "../config/api";
 
 
 const numeral = require('numeral');
 
 export default function ProductItem(props) {
     const navigate = useNavigate();
+
+
+    // const [itemProduct, setitemProduct] = useState(props.data);
+
+    const token = useSelector(state => state.userReducer.token);
+
+
+
+
+
+   
+
+
+
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
+    const dispatch = useDispatch();
+
+    const addFavourite = async (id) => {
+        try {
+            dispatch(favouriteProduct(id))
+            await customAxios.patch(`/products/${id}.json`, {...props.data, isFavourite: !props.data?.isFavourite})
+        } catch (error) {
+            console.log(error);
+        }
+
+        
+    }
+
+
+    
 
     return (
         <Card className="product__card">
@@ -22,6 +58,7 @@ export default function ProductItem(props) {
                 <div className="product__addCart">
                    <button onClick={ (e) => {
                     e.preventDefault();
+                    token === null ? handleShow() : dispatch(addCart({id: props.id, quantity: 1}))
                    }}>Add to cart</button>
                 </div>
             </Card.Header>
@@ -34,16 +71,36 @@ export default function ProductItem(props) {
                 </Card.Text>
                 <Card.Title className="product__name">{props.data.name}</Card.Title>
                 <Card.Text className="product__price">
-                    <span className="product__price-default">{numeral(props.data.price).format('$0,0.00')}</span> - 
-                    <span className="product__price-sale"> {numeral(props.data.price - props.data.price*props.data.sale/100).format('$0,0.00')}</span>
+
+                    {props.data.sale > 0 ? (<><span className="product__price-default">{numeral(props.data.price).format('$0,0.00')}</span> -
+                    <span className="product__price-sale"> {numeral(props.data.price - props.data.price*props.data.sale/100).format('$0,0.00')}</span> </>) : <span className="product__price-sale">{numeral(props.data.price).format('$0,0.00')}</span>}
                 </Card.Text>
                     <div className="product__wishlist" onClick={(e) => {
                         e.preventDefault();
+                        token === null ? handleShow() : addFavourite(props.id)
+                        
                     }}>
-                    <i className='bx bx-heart'></i>
+                    <i className='bx bx-heart' style={ props.data.isFavourite ? {color: '#C32929'} : {color: '#222'} }></i>
                 </div>
             </Card.Body>
             </Link>
+
+            <Modal show={showModal} onHide={handleClose} animation={true}>
+        
+            <Modal.Body >You must be logged in to manage your wishlist. <Link to={"/signin"}>Login Now</Link></Modal.Body>
+
+      </Modal>
         </Card>
     );
 }
+
+
+    // "category": "Men",
+    // "description": "Self-striped knitted midi A-line dress, has a scoop neck, T-shirt, straight hem",
+    // "image": "https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fp-7.png&w=384&q=100",
+    // "isFavourite": false,
+    // "name": "Regular Fit Crew-neck T-shirt",
+    // "price": 12.3,
+    // "quantity": 150,
+    // "sale": 10,
+    // "timeupload": "2022/5/19"

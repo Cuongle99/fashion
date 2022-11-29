@@ -1,0 +1,19 @@
+.cart__item {
+    margin-bottom: 30px;
+    display: flex;
+    img {
+        max-width: 150px;
+    }
+    .cart__info {
+        padding-left: 50px;
+    }
+    .cart__price span {
+        font-size: 16px;
+        font-weight: 500;
+        color: $main-color;
+        &.no-price {
+            text-decoration: line-through;
+            color: #999;
+        }
+    }
+}

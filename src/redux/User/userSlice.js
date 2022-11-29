@@ -13,12 +13,13 @@ const userSlice = createSlice({
       state.token = actions.payload.idToken;
       state.localId = actions.payload.localId;
       localStorage.setItem("token", actions.payload.idToken);
-      localStorage.setItem("localId", actions.payload.locaalId);
+      localStorage.setItem("localId", actions.payload.localId);
       
     },
     logout: (state, actions) => {
       state.token = null;
       localStorage.removeItem('token')
+      localStorage.removeItem('localId')
     },
   },
 });

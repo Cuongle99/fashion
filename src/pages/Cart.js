@@ -1,7 +1,51 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { Col, Container, Row } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
+import CartItem from '../components/CartItem'
+import Footer from '../components/Footer'
+import Header from '../components/Header'
 
 export default function Cart() {
+
+  const [listCartProducts, setlistCartProducts] = useState('');
+  const listProduct = useSelector((state) => state.productReducer.cart);
+
+  console.log(listProduct);
+
+
+  // useEffect(() => {
+  //   setlistCartProducts(listCartProduct[localId])
+  // });
+
+
+
+
+
+
+  
+
+
+  
   return (
-    <div>Cart</div>
+    <>
+      <Header/>
+      <Container>
+        <Row>
+          <Col sm={8}>
+          <h2 className='mb-5'>Shopping Cart</h2>
+              {
+                listCartProducts && Object.keys(listCartProducts).map(key => {
+                  
+                  return <CartItem key={key} data={listProduct[key]} />
+                })
+              }
+
+
+          </Col>
+          <Col sm={4}></Col>
+        </Row>
+      </Container>
+      <Footer />
+    </>
   )
 }

@@ -37,18 +37,7 @@
             color: #222;
         }
     }
-    .product__price {
-        margin-bottom: 0;
-        font-weight: 500;
-        font-size: 16px;
-        &-default {
-            color: #999;
-            text-decoration: line-through;
-        }
-        &-sale {
-            color: $main-color;
-        }
-    }
+    
     .product__flags {
         position: absolute;
         top: 30px;
@@ -102,7 +91,104 @@
     }
 }
 
+.product__description {
+    font-size: 16px;
+    line-height: 24px;
+    color: #222;
+}
+
+.product__price {
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 16px;
+    &-default {
+        color: #999;
+        text-decoration: line-through;
+    }
+    &-sale {
+        color: $main-color;
+    }
+}
+
+.product__detail__addcart {
+    height: 60px;
+    max-width: 275px;
+    width: 100%;
+    background-color: #222;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: 0.2s all ease-in-out;
+    border: none;
+    outline: none;
+    border-radius: 0;
+    &:hover {
+        background-color: $main-color;
+        border: none;
+        outline: none;
+        border-radius: 0;
+    }
+}
+
 .boxNew {
-    margin-top: 80px;
-    
+    margin-top: 80px; 
+}
+
+.product__detail {
+    &__image {
+        img {
+            width: 90%;
+        }
+    }
+    .add-to-cart {
+        display: flex;
+        .add-cart-quantity {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-right: 15px;
+        }
+        .addCart__quantity__input {
+            height: 60px;
+            min-width: 150px;
+            border: 2px solid #999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 500;
+            color: #222;
+        }
+        .addCart__quantity__btn {
+            position: absolute;
+            font-size: 18px;
+            font-weight: 600;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            &:hover {
+                color: $main-color;
+            }
+            &.plus {
+                right: 10px;
+            }
+            &.minus {
+                left: 10px;
+            }
+        }
+    }
+}
+
+.product__detail__label {
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #222;
+}
+.product__detail__text {
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #666;
 }

@@ -13,16 +13,18 @@ import ProductSale from '../components/ProductSale'
 import SubEmail from '../components/SubEmail'
 import Support from '../components/Support'
 import Season from '../components/Season';
+import { getListBlog } from '../redux/Blog/blogSlice';
 
 
 export default function Home() {
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
 
-  useEffect(() => {
-    dispatch(getListProduct());
-  });
+  // useEffect(() => {
+  //   dispatch(getListProduct());
+  //   dispatch(getListBlog());
+  // });
 
   return (
     <>

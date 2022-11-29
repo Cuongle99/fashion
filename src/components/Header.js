@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Dropdown from "react-bootstrap/Dropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../assets/images/logo.png";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/User/userSlice";
 
 export default function Header() {
     const [show, setShow] = useState(false);
+
+    const token = useSelector((state) => state.userReducer.token);
+    const dispatch = useDispatch();
+
     const showDropdown = (e) => {
         setShow(!show);
     };
@@ -23,7 +30,8 @@ export default function Header() {
                         <img src={logo} alt="logo " />
                     </Navbar.Brand>
                     <Navbar.Toggle
-                        aria-controls={`offcanvasNavbar-expand-lg`} className="order-last ms-5"
+                        aria-controls={`offcanvasNavbar-expand-lg`}
+                        className="order-last ms-5"
                     />
                     <Navbar.Offcanvas
                         id={`offcanvasNavbar-expand-lg`}
@@ -35,8 +43,8 @@ export default function Header() {
                                 id={`offcanvasNavbarLabel-expand-lg`}
                             >
                                 <Navbar.Brand href="/">
-                                  <img src={logo} alt="logo " />
-                              </Navbar.Brand>
+                                    <img src={logo} alt="logo " />
+                                </Navbar.Brand>
                             </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
@@ -68,19 +76,6 @@ export default function Header() {
                                     <Link to={"/contact"}>Contact</Link>
                                 </Nav.Item>
                             </Nav>
-                            {/* <Form className="d-flex">
-                                <Form.Control
-                                    type="search"
-                                    placeholder="Search"
-                                    className="me-2"
-                                    aria-label="Search"
-                                />
-                                <Button variant="outline-success">
-                                    Search
-                                </Button>
-                            </Form> */}
-
-
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
                     <div className="header__right flex-grow-1">
@@ -88,20 +83,41 @@ export default function Header() {
                             <i className="bx bx-search"></i>
                         </div>
                         <div className="header__right__item">
-                          <Link to={"/favourite"}>
-                          <i className='bx bx-heart'></i>
-                          </Link>
+                            <Link to={"/favourite"}>
+                                <i className="bx bx-heart"></i>
+                            </Link>
                         </div>
                         <div className="header__right__item">
                             <Link to="/cart">
                                 <i className="bx bx-shopping-bag"></i>
                             </Link>
                         </div>
-                        <div className="header__right__item">
-                            <i className="bx bx-user"></i>
-                        </div>
+                        <Dropdown className="header__right__item">
+                            <Dropdown.Toggle
+                                variant="success"
+                                id="dropdown-basic"
+                            >
+                                <i className="bx bx-user"></i>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                {token != null ? (
+                                    <>
+                                        <Link to={"/myaccount"}>
+                                            My account
+                                        </Link>
+                                        <div onClick={() => dispatch(logout())}>
+                                            Sign out
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link to={"/signin"}>Sign In</Link>
+                                        <Link to={"/signup"}>Sign Up</Link>
+                                    </>
+                                )}
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </div>
-                    
                 </Container>
             </Navbar>
         </div>

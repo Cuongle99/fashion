@@ -1,25 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Container } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Slider from 'react-slick';
-import { getListBlog } from '../redux/Blog/blogSlice';
 import BlogItem from './BlogItem';
 
 const BlogBox = () => {
 
     const listBlog = useSelector(state => state.blogReducer);
 
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getListBlog());
-    });
-
     const settings1 = {
         dots: true,
         infinite: true,
         autoplaySpeed: 5000,
-        autoplay: true,
+        autoplay: false,
         accessibility: true,
         speed: 500,
         slidesToShow: 3,
@@ -32,6 +25,7 @@ const BlogBox = () => {
                 <Slider {...settings1} className='list'>
                     {
                         listBlog.data && Object.keys(listBlog.data).map( key => {
+                            
                             return <BlogItem key={key} data={listBlog.data[key]} />
                         })
                     }
