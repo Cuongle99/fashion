@@ -6,15 +6,19 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Dropdown from "react-bootstrap/Dropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../assets/images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/User/userSlice";
+import { signOut } from "firebase/auth";
+import { Button, Form, Modal } from "react-bootstrap";
 
 export default function Header() {
     const [show, setShow] = useState(false);
+    const [showSearch, setShowSearch] = useState(false);
 
     const token = useSelector((state) => state.userReducer.token);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const showDropdown = (e) => {
         setShow(!show);
@@ -22,6 +26,16 @@ export default function Header() {
     const hideDropdown = (e) => {
         setShow(false);
     };
+
+    const signOut = () => {
+        dispatch(logout());
+        navigate("/home");
+    };
+
+    const handleClose = () => {
+        setShowSearch(false);
+    }
+    const handleShow = () => setShowSearch(true);
     return (
         <div className="header">
             <Navbar key="lg" expand="lg" className="">
@@ -79,8 +93,59 @@ export default function Header() {
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>
                     <div className="header__right flex-grow-1">
-                        <div className="header__right__item">
-                            <i className="bx bx-search"></i>
+                        <div
+                            className="header__right__item"
+                            
+                        >
+                            <i className="bx bx-search" onClick={handleShow}></i>
+                            <Modal show={showSearch} onHide={handleClose}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Modal heading</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <Form>
+                                        <Form.Group
+                                            className="mb-3"
+                                            controlId="exampleForm.ControlInput1"
+                                        >
+                                            <Form.Label>
+                                                Email address
+                                            </Form.Label>
+                                            <Form.Control
+                                                type="email"
+                                                placeholder="name@example.com"
+                                                autoFocus
+                                            />
+                                        </Form.Group>
+                                        <Form.Group
+                                            className="mb-3"
+                                            controlId="exampleForm.ControlTextarea1"
+                                        >
+                                            <Form.Label>
+                                                Example textarea
+                                            </Form.Label>
+                                            <Form.Control
+                                                as="textarea"
+                                                rows={3}
+                                            />
+                                        </Form.Group>
+                                    </Form>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button
+                                        // variant="secondary"
+                                        onClick={handleClose}
+                                    >
+                                        Close
+                                    </Button>
+                                    <Button
+                                        // variant="primary"
+                                        onClick={handleClose}
+                                    >
+                                        Save Changes
+                                    </Button>
+                                </Modal.Footer>
+                            </Modal>
                         </div>
                         <div className="header__right__item">
                             <Link to={"/favourite"}>
@@ -105,7 +170,7 @@ export default function Header() {
                                         <Link to={"/myaccount"}>
                                             My account
                                         </Link>
-                                        <div onClick={() => dispatch(logout())}>
+                                        <div onClick={() => signOut()}>
                                             Sign out
                                         </div>
                                     </>

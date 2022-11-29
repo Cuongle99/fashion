@@ -9,8 +9,7 @@ import Home from "../pages/Home";
 import Product from "../pages/Product";
 import ProductDetail from "../pages/ProductDetail";
 import { getListBlog } from "../redux/Blog/blogSlice";
-import { getCartProduct } from "../redux/Cart/cartSlice";
-import { getListProduct } from "../redux/Product/productSlice";
+import { getCartProduct, getListProduct } from "../redux/Product/productSlice";
 import ProtectRouter from "./ProtectRouter";
 
 const router = createBrowserRouter([
@@ -24,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/cart",
-    element: <Cart />,
+    element: <ProtectRouter><Cart /></ProtectRouter>,
   },
   {
     path: "/product",
@@ -55,6 +54,7 @@ export default function Routes() {
   useEffect(() => {
     dispatch(getListProduct());
     dispatch(getListBlog());
+    dispatch(getCartProduct());
   });
   return (
     <>

@@ -15,6 +15,7 @@ export default function CartItem(props) {
                     <span> {numeral(props.data?.price - props.data?.price*props.data?.sale/100).format('$0,0.00')}</span>
                 </> : <span>{numeral(props.data?.price).format('$0,0.00')}</span>}
             </div>
+            <h3>{props.data?.cartQuantity}</h3>
         </div>
     </div>
   )

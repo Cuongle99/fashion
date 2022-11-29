@@ -7,10 +7,8 @@ import Header from '../components/Header'
 
 export default function Cart() {
 
-  const [listCartProducts, setlistCartProducts] = useState('');
-  const listProduct = useSelector((state) => state.productReducer.cart);
 
-  console.log(listProduct);
+  const listProduct = useSelector((state) => state.productReducer.cart);
 
 
   // useEffect(() => {
@@ -34,9 +32,9 @@ export default function Cart() {
           <Col sm={8}>
           <h2 className='mb-5'>Shopping Cart</h2>
               {
-                listCartProducts && Object.keys(listCartProducts).map(key => {
+                listProduct?.map((item, index) => {
                   
-                  return <CartItem key={key} data={listProduct[key]} />
+                  return <CartItem key={index} data={item} />
                 })
               }
 

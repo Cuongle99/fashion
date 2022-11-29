@@ -7,6 +7,6 @@ export default function ProtectRouter(props) {
   return token != null ? (
     props.children
   ) : (
-    <Navigate to={'/login'} replace={true} />
+    <Navigate to={'/signin'} replace={true} />
   );
 }

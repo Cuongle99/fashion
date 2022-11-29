@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { checkTime } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
-import {  addCart, favouriteProduct } from "../redux/Product/productSlice";
+import {  addCart, addCartCheck2, favouriteProduct } from "../redux/Product/productSlice";
 import { customAxios } from "../config/api";
 
 
@@ -13,11 +13,23 @@ const numeral = require('numeral');
 
 export default function ProductItem(props) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
 
     // const [itemProduct, setitemProduct] = useState(props.data);
 
     const token = useSelector(state => state.userReducer.token);
+    const carts = useSelector(state => state.productReducer.cart);
+
+    const addCartCheck1 = (datas) => {
+        const index =  carts?.findIndex(item => item.idCart === datas.id)
+
+        if (index < 0) {
+            dispatch(addCart(datas))
+        } else {
+            dispatch(addCartCheck2(datas))
+        }
+    }
 
 
 
@@ -30,7 +42,6 @@ export default function ProductItem(props) {
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);
-    const dispatch = useDispatch();
 
     const addFavourite = async (id) => {
         try {
@@ -58,7 +69,7 @@ export default function ProductItem(props) {
                 <div className="product__addCart">
                    <button onClick={ (e) => {
                     e.preventDefault();
-                    token === null ? handleShow() : dispatch(addCart({id: props.id, quantity: 1}))
+                    token === null ? handleShow() : addCartCheck1({id: props.id, quantity: 1, data: props.data})
                    }}>Add to cart</button>
                 </div>
             </Card.Header>

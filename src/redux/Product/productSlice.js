@@ -4,7 +4,7 @@ import { customAxios } from "../../config/api";
 const initialState = {
     data: {},
     favourites: null,
-    cart: null
+    cart: []
 };
 
 export const getListProduct = createAsyncThunk(
@@ -34,7 +34,8 @@ export const getCartProduct = createAsyncThunk(
             const res = await customAxios.get(
                 `/cart/${userId}.json?auth=${token}`
             );
-
+            
+            
             
             return res.data;
         } catch (error) {
@@ -49,11 +50,12 @@ export const addCart = createAsyncThunk(
         try {
             const token = thunkApi.getState().userReducer.token;
             const userId = thunkApi.getState().userReducer.localId;
-            thunkApi.dispatch(getCartProduct())
             const res = await customAxios.put(
                 `/cart/${userId}/${arg.id}.json?auth=${token}`,
                 arg
             );
+            thunkApi.dispatch(getCartProduct())
+
             return res.data;
         } catch (error) {
             console.log(error);
@@ -61,22 +63,35 @@ export const addCart = createAsyncThunk(
     }
 );
 
-export const favouriteProducts = createAsyncThunk(
-    "products/addFavourite",
+export const addCartCheck2 = createAsyncThunk(
+    "products/addCart",
     async (arg, thunkApi) => {
         try {
             const token = thunkApi.getState().userReducer.token;
             const userId = thunkApi.getState().userReducer.localId;
-            const res = await customAxios.put(
-                `/favourite/${userId}/${arg}.json?auth=${token}`,
-                true
+            thunkApi.dispatch(getCartProduct())
+            const res = await customAxios.get(
+                `/cart/${userId}/${arg.id}.json?auth=${token}`
             );
-            return res.data;
+
+            console.log(res.data);
+
+            res.data.quantity = res.data.quantity + arg.quantity
+
+            console.log(res.data);
+            
+            const res2 = await customAxios.patch(
+                `/cart/${userId}/${arg.id}.json?auth=${token}`, res.data
+            );
+            thunkApi.dispatch(getCartProduct())
+
+            return res2.data;
         } catch (error) {
             console.log(error);
         }
     }
 );
+
 
 
 
@@ -88,6 +103,24 @@ export const productSlice = createSlice({
             const id = action.payload;
             state.data[id].isFavourite = !state.data[id].isFavourite;
         },
+        addCartCheck: (state, action) => {
+            const datas = action.payload
+            
+
+            if(state.data) {
+                const cloneState = JSON.parse(JSON.stringify(state.cart))
+                const list = cloneState?.map(item => {
+                    if(item.idCart === datas.id) {
+                        item.cartQuantity+=datas.quantity
+                    }
+                    return item
+                })
+    
+    
+                state.cart = list
+            }
+            
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -99,13 +132,7 @@ export const productSlice = createSlice({
             .addCase(getListProduct.rejected, (state, action) => {})
             .addCase(addCart.pending, (state, action) => {})
             .addCase(addCart.fulfilled, (state, action) => {
-                const cartItem = action.payload;
-                const cloneState = JSON.parse(JSON.stringify(state.cart));
-                console.log(cloneState);
-                const index = cloneState?.findIndex(item => item.idCart === cartItem.id)
-                if(index >= 0) {
-                
-                }
+      
 
             })
             .addCase(addCart.rejected, (state, action) => {})
@@ -119,26 +146,37 @@ export const productSlice = createSlice({
                     state.error = action.payload.error;
                 } else {
                     const carts = action.payload;
+                    console.log(carts);
 
-                    if (carts) {
-                        const listCarts = Object.keys(
-                            carts
-                        ).map((item) => {
-                            return {...state.data[item], idCart: item}
-                        });
-
-                        state.cart = listCarts;
-                    }
+                    const list = Object.keys(carts).map(item => {
+                        return {...carts[item].data, idCart: carts[item].id , cartQuantity: carts[item].quantity}
+                    })
+                    state.cart = list
                 }
             })
             .addCase(getCartProduct.rejected, (state, action) => {})
+            // .addCase(addCartCheck2.pending, (state, action) => {})
+            // .addCase(addCartCheck2.fulfilled, (state, action) => {
+
+            //     if (action.payload.error) {
+            //         state.error = action.payload.error;
+            //     } else {
+            //         const carts = action.payload;
+
+            //         const list = Object.keys(carts).map(item => {
+            //             return {...carts[item].data, idCart: carts[item].id , cartQuantity: carts[item].quantity}
+            //         })
+            //         state.cart = list
+            //     }
+            // })
+            // .addCase(addCartCheck2.rejected, (state, action) => {})
 
             
             
     },
 });
 
-export const { favouriteProduct } = productSlice.actions;
+export const { favouriteProduct,addCartCheck } = productSlice.actions;
 
 export default productSlice.reducer;
 
