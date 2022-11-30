@@ -13,9 +13,6 @@ export default function Product() {
     const dispatch = useDispatch();
 
 
-    console.log(listProduct);
-
-
     useEffect(() => {
         dispatch(getListProduct());
     });

@@ -2,7 +2,6 @@ import React from 'react'
 
 export default function CartItem(props) {
 
-    console.log(props.data);
     const numeral = require('numeral');
   return (
     <div className='cart__item'>

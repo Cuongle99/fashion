@@ -74,11 +74,9 @@ export const addCartCheck2 = createAsyncThunk(
                 `/cart/${userId}/${arg.id}.json?auth=${token}`
             );
 
-            console.log(res.data);
 
             res.data.quantity = res.data.quantity + arg.quantity
 
-            console.log(res.data);
             
             const res2 = await customAxios.patch(
                 `/cart/${userId}/${arg.id}.json?auth=${token}`, res.data
@@ -146,7 +144,6 @@ export const productSlice = createSlice({
                     state.error = action.payload.error;
                 } else {
                     const carts = action.payload;
-                    console.log(carts);
 
                     const list = Object.keys(carts).map(item => {
                         return {...carts[item].data, idCart: carts[item].id , cartQuantity: carts[item].quantity}

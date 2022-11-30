@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
@@ -50,12 +50,15 @@ const router = createBrowserRouter([
 export default function Routes() {
   const dispatch = useDispatch();
 
+  const token = useSelector(state => state.userReducer.token)
+
 
   useEffect(() => {
     dispatch(getListProduct());
     dispatch(getListBlog());
     dispatch(getCartProduct());
-  });
+  }, [token]);
+
   return (
     <>
       <RouterProvider router={router}>

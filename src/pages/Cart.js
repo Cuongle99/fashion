@@ -11,17 +11,6 @@ export default function Cart() {
   const listProduct = useSelector((state) => state.productReducer.cart);
 
 
-  // useEffect(() => {
-  //   setlistCartProducts(listCartProduct[localId])
-  // });
-
-
-
-
-
-
-  
-
 
   
   return (

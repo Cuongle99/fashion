@@ -16,7 +16,6 @@ export default function ProductDetail() {
 
   const productId = params.productId;
 
-  const [detailProduct, setdetailProduct] = useState(null);
 
   const [quantity, setQuantity] = useState(1)
   const updateQuantity = (type) => {
@@ -27,25 +26,16 @@ export default function ProductDetail() {
     }
 }
 
-  const listProduct = useSelector(state => state.productReducer)
+  const listProduct = useSelector(state => state.productReducer);
+  const productIndex = listProduct.data[productId]
 
-  useEffect(() => {
-    getDetail();
-  });
+  console.log(listProduct);
 
-  const getDetail = async () => {
-    try {
-      const dataDetail = await customAxios.get(`/products/${productId}.json`);
-      setdetailProduct(dataDetail.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const settings_1 = {
         dots: true,
         infinite: true,
-        // accessibility: true,
+        accessibility: true,
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 4,
@@ -61,19 +51,19 @@ export default function ProductDetail() {
                 <Row>
                   <Col md={6}>
                     <div className="product__detail__image">
-                      <img src={detailProduct?.image} alt="" />
+                      <img src={productIndex?.image} alt="" />
                     </div>
                   </Col>
                   <Col md={6}>
                     <div className="product__detail__content">
                       <h1 className="product__detail__name">
-                        {detailProduct?.name}
+                        {productIndex?.name}
                       </h1>
                       <div className="product__price">
-                      {detailProduct?.sale > 0 ? (<><span className="product__price-default">{numeral(detailProduct?.price).format('$0,0.00')}</span> -
-                    <span className="product__price-sale"> {numeral(detailProduct?.price - detailProduct?.price*detailProduct?.sale/100).format('$0,0.00')}</span> </>) : <span className="product__price-sale">{numeral(detailProduct?.price).format('$0,0.00')}</span>}
+                      {productIndex?.sale > 0 ? (<><span className="product__price-default">{numeral(productIndex?.price).format('$0,0.00')}</span> -
+                    <span className="product__price-sale"> {numeral(productIndex?.price - productIndex?.price*productIndex?.sale/100).format('$0,0.00')}</span> </>) : <span className="product__price-sale">{numeral(productIndex?.price).format('$0,0.00')}</span>}
                       </div>
-                      <p className='product__description mt-3'>{detailProduct?.description}</p>
+                      <p className='product__description mt-3'>{productIndex?.description}</p>
                       <div className='add-to-cart mt-5 mb-5'>
                       <div className="add-cart-quantity">
                         <div className="addCart__quantity__btn minus" onClick={() => updateQuantity('minus')}>
@@ -91,28 +81,30 @@ export default function ProductDetail() {
                       </div>
                       <div className='mb-2'>
                         <span className="product__detail__label">Category : </span>
-                        <span className="product__detail__text"><Link to={"/category"}>{detailProduct?.category}</Link></span>
+                        <span className="product__detail__text"><Link to={"/category"}>{productIndex?.category}</Link></span>
                       </div>
                       <div>
                         <span className="product__detail__label">Quantity : </span>
-                        <span className="product__detail__text">{detailProduct?.quantity}</span>
+                        <span className="product__detail__text">{productIndex?.quantity}</span>
                       </div>
                     </div>
                   </Col>
                 </Row>
 
+                
+
                 <Slider {...settings_1} className="list mt-5">
                     {
                       
+                  
+                      
                     listProduct.data &&
                             Object.keys(listProduct.data).map((key) => {
-                                return listProduct.data[key]?.category === detailProduct?.category ?
-                                    <ProductItem
-                                        key={key}
-                                        data={listProduct.data[key]}
-                                        id={key}
-                                    /> : null
+                              if (listProduct.data[key].category === productIndex.category) 
+                              {
+                                return <ProductItem key={key} data={listProduct.data[key]} id={key} />
                                 
+                              }
                             })
                     }
                 </Slider>

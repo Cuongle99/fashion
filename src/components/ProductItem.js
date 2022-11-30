@@ -35,10 +35,6 @@ export default function ProductItem(props) {
 
 
 
-   
-
-
-
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
     const handleShow = () => setShowModal(true);

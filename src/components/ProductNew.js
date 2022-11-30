@@ -27,11 +27,19 @@ export default function ProductNew() {
       <h1 className='boxProduct__title mb-5 text-center'>News Product</h1>
         
         <Slider {...settings} className='list'>
-          {listProduct.data &&  Object.keys(listProduct.data).map(key => listProduct.data[key]).filter(item => checkTime(item.timeupload) < 50).map((item, index) => {
+          {/* {listProduct.data &&  Object.keys(listProduct.data).map(key => listProduct.data[key]).filter(item => checkTime(item.timeupload) < 50).map((item, index) => {
             return <ProductItem  data={item} key={index}/>
-          })}
-          </Slider> 
-        
+          })} */}
+
+          {
+            listProduct.data && Object.keys(listProduct.data).map(key => {
+
+              if(checkTime(listProduct.data[key].timeupload) < 50) {
+                return <ProductItem data={listProduct.data[key]} key={key} id={key} />
+              }
+            })
+          }
+        </Slider> 
       </Container>
     </div>
   )
