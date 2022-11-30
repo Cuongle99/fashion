@@ -63,6 +63,23 @@ export const addCart = createAsyncThunk(
     }
 );
 
+export const deleteCart = createAsyncThunk(
+    "products/deleteCart",
+    async (arg, thunkApi) => {
+        try {
+            const token = thunkApi.getState().userReducer.token;
+            const userId = thunkApi.getState().userReducer.localId;
+            const res = await customAxios.delete(
+                `/cart/${userId}/${arg}.json?auth=${token}`
+            );
+            thunkApi.dispatch(getCartProduct());
+            return res.data
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)
+
 export const addCartCheck2 = createAsyncThunk(
     "products/addCart",
     async (arg, thunkApi) => {

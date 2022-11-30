@@ -6,9 +6,18 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 
 export default function Cart() {
+  const numeral = require('numeral');
 
 
   const listProduct = useSelector((state) => state.productReducer.cart);
+
+
+  const count = (data) => {
+    return (data?.price - data?.price * data?.sale / 100)*data?.cartQuantity
+  }
+
+  const total = numeral(listProduct?.reduce((a, b) => a + count(b), 0)).format('$0,0.00')
+ 
 
 
 
@@ -18,8 +27,9 @@ export default function Cart() {
       <Header/>
       <Container>
         <Row>
+        <h2 className='mb-5'>Shopping Cart</h2>
           <Col sm={8}>
-          <h2 className='mb-5'>Shopping Cart</h2>
+          
               {
                 listProduct?.map((item, index) => {
                   
@@ -29,7 +39,17 @@ export default function Cart() {
 
 
           </Col>
-          <Col sm={4}></Col>
+          <Col sm={4}>
+            <div className="cart__right">
+              <div className="cart__right__info"><h3 className='label'>Total</h3>
+              <h3 className='value text-end'>{total}</h3></div>
+
+              <button className="cart__button__order">
+                Check Out
+              </button>
+              
+            </div>
+          </Col>
         </Row>
       </Container>
       <Footer />

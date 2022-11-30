@@ -7,12 +7,6 @@ import Slider from "react-slick";
 export default function ProductBox() {
     const listProduct = useSelector((state) => state.productReducer);
 
-    
-    
-
-
-
-
 
 
     const settings_1 = {

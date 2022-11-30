@@ -138,8 +138,28 @@
 .product__detail {
     &__image {
         img {
-            width: 90%;
+            width: 100%;
         }
+        .slick-list {
+            margin-right: 0;
+            margin-left: 0;
+        }
+        .slick-thumb.slick-dots {
+            position: initial;
+            margin-top: 10px;
+            text-align: left;
+            li {
+                width: 80px;
+                height: auto;
+                margin: 0 15px 0 0;
+            }
+            img {
+                max-width: 80px;    
+            }
+        }
+    }
+    &__content {
+        padding-left: 60px; 
     }
     .add-to-cart {
         display: flex;

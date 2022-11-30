@@ -57,7 +57,7 @@ export default function ProductItem(props) {
         <Card className="product__card">
             <Link to={`/products/${props.id}`} >
             <Card.Header>
-                <Card.Img variant="top" src={props.data.image} />
+                <Card.Img variant="top" src={props.data.image[0]} />
                 <div className="product__flags">
                     {props.data.sale > 0 ? <span className="product__flag">{"-" + props.data.sale + "%"}</span> : null}
                     {checkTime(props.data.timeupload) < 50 ? <span className="product__flag new"> New </span> : null}
@@ -72,7 +72,7 @@ export default function ProductItem(props) {
             <Card.Body>
                 <Card.Text className="product__category" onClick={ (e) => {
                        e.preventDefault();
-                        navigate('/category')
+                        navigate(`/product/${props.data.category}`)
                 }}>
                 {props.data.category}
                 </Card.Text>
@@ -101,13 +101,3 @@ export default function ProductItem(props) {
     );
 }
 
-
-    // "category": "Men",
-    // "description": "Self-striped knitted midi A-line dress, has a scoop neck, T-shirt, straight hem",
-    // "image": "https://chawkbazar.vercel.app/_next/image?url=%2Fassets%2Fimages%2Fproducts%2Fp-7.png&w=384&q=100",
-    // "isFavourite": false,
-    // "name": "Regular Fit Crew-neck T-shirt",
-    // "price": 12.3,
-    // "quantity": 150,
-    // "sale": 10,
-    // "timeupload": "2022/5/19"

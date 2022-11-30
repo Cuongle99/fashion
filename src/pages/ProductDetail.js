@@ -1,13 +1,14 @@
 import { Numeral } from 'numeral';
 import React, {useEffect, useState} from 'react';
-import {Container, Row, Col, Button} from 'react-bootstrap';
-import {useSelector} from 'react-redux';
+import {Container, Row, Col, Button, Modal} from 'react-bootstrap';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link, useParams} from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import {customAxios} from '../config/api';
 import Slider from "react-slick";
 import ProductItem from '../components/ProductItem';
+import { addCart, addCartCheck2 } from '../redux/Product/productSlice';
 
 const numeral = require('numeral');
 
@@ -15,6 +16,8 @@ export default function ProductDetail() {
   const params = useParams();
 
   const productId = params.productId;
+
+  const dispatch = useDispatch()
 
 
   const [quantity, setQuantity] = useState(1)
@@ -27,9 +30,25 @@ export default function ProductDetail() {
 }
 
   const listProduct = useSelector(state => state.productReducer);
+  const token = useSelector(state => state.userReducer.token);
   const productIndex = listProduct.data[productId]
 
-  console.log(listProduct);
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const carts = useSelector(state => state.productReducer.cart);
+
+    const addCartCheck1 = (datas) => {
+        const index =  carts?.findIndex(item => item.idCart === datas.id)
+
+        if (index < 0) {
+            dispatch(addCart(datas))
+        } else {  
+            dispatch(addCartCheck2(datas))
+        }
+    }
+
 
 
   const settings_1 = {
@@ -43,18 +62,41 @@ export default function ProductDetail() {
         rows: 1,
     };
 
+
+    const settings_2   = {
+      customPaging: function(i) {
+        return (
+          <a>
+            <img src={productIndex?.image[i]} />
+          </a>
+        );
+      },
+      dots: true,
+      dotsClass: "slick-dots slick-thumb",
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
+
   return (
     <>
         <Header />
         <div className="product__detail">
             <Container>
                 <Row>
-                  <Col md={6}>
+                  <Col md={5}>
                     <div className="product__detail__image">
-                      <img src={productIndex?.image} alt="" />
+                      {/* <img src={productIndex?.image} alt="" /> */}
+
+                        <Slider {...settings_2}>
+                          {productIndex?.image.map((item, index) => {
+                            return  <div key={index}><img src={productIndex?.image[index]}/></div>
+                          })}
+                        </Slider>
                     </div>
                   </Col>
-                  <Col md={6}>
+                  <Col md={7}>
                     <div className="product__detail__content">
                       <h1 className="product__detail__name">
                         {productIndex?.name}
@@ -77,7 +119,10 @@ export default function ProductDetail() {
                         </div>
                     </div>
 
-                        <Button className='product__detail__addcart'>Add To Cart</Button>
+                        <Button className='product__detail__addcart' onClick={ (e) => {
+                    e.preventDefault();
+                    token === null ? handleShow() : addCartCheck1({id: productId, quantity: quantity, data: productIndex})
+                   }}>Add To Cart</Button>
                       </div>
                       <div className='mb-2'>
                         <span className="product__detail__label">Category : </span>
@@ -109,6 +154,10 @@ export default function ProductDetail() {
                     }
                 </Slider>
             </Container>
+            
+            <Modal show={showModal} onHide={handleClose} animation={true}>
+        
+            <Modal.Body >You must be logged in to manage your wishlist. <Link to={"/signin"}>Login Now</Link></Modal.Body> </Modal>
         </div>
         <Footer />
     </>
