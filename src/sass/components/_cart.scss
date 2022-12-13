@@ -5,33 +5,35 @@
     img {
         max-width: 150px;
     }
-    .cart__info {
-        padding-left: 50px;
+    
+}
+
+.cart__info {
+    padding-left: 50px;
+}
+.cart__price span {
+    font-size: 16px;
+    font-weight: 500;
+    color: $main-color;
+    &.no-price {
+        text-decoration: line-through;
+        color: #999;
     }
-    .cart__price span {
-        font-size: 16px;
-        font-weight: 500;
-        color: $main-color;
-        &.no-price {
-            text-decoration: line-through;
-            color: #999;
-        }
+}
+.cart__quantity {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    h3 {
+        margin-bottom: 0;
     }
-    .cart__quantity {
-        flex: 1;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        h3 {
-            margin-bottom: 0;
-        }
-        i {
-            margin-left: 30px;
-            font-size: 24px;
-            cursor: pointer;
-            &:hover {
-                color: $main-color;
-            }
+    i {
+        margin-left: 30px;
+        font-size: 24px;
+        cursor: pointer;
+        &:hover {
+            color: $main-color;
         }
     }
 }

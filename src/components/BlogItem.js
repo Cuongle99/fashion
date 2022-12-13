@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const BlogItem = (props) => {
     return (
         <div className='blog__item'>
-            <Link to={`/blog/${props.data.id}`}>
+            <Link to={`/blog/${props.id}`}>
             <img src={props.data.image} alt="" className="blog__image" />
             <div className='blog__content'>
                 <div className="blog__top">

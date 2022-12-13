@@ -26,7 +26,7 @@ const BlogBox = () => {
                     {
                         listBlog.data && Object.keys(listBlog.data).map( key => {
                             
-                            return <BlogItem key={key} data={listBlog.data[key]} />
+                            return <BlogItem key={key} data={listBlog.data[key]} id={key}/>
                         })
                     }
                 </Slider>

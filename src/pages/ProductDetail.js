@@ -9,6 +9,7 @@ import {customAxios} from '../config/api';
 import Slider from "react-slick";
 import ProductItem from '../components/ProductItem';
 import { addCart, addCartCheck2 } from '../redux/Product/productSlice';
+import Breadcrumb from '../components/Breadcrumb';
 
 const numeral = require('numeral');
 
@@ -82,6 +83,7 @@ export default function ProductDetail() {
   return (
     <>
         <Header />
+        <Breadcrumb data={'Product Detail'} />
         <div className="product__detail">
             <Container>
                 <Row>

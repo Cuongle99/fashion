@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { sendEmail } from "../redux/ClientEmail/EmailSlice";
 
 export default function SubEmail() {
+    const dispatch = useDispatch()
+    const [emailValue, setEmailValue] = useState(null)
+    const navigate = useNavigate()
+
+    const handleOnChange = (e) => {
+        setEmailValue(e.target.value)
+    }
+
     return (
         <div className="boxSubemail">
             <Container>
@@ -18,7 +29,7 @@ export default function SubEmail() {
                     </Col>
                     <Col md={6}>
                         <div className="subemail__right">   
-                            <Form className="subemail__form d-flex justify-content-end align-items-center">
+                            <div className="subemail__form d-flex justify-content-end align-items-center">
                                 <Form.Group className="flex-grow-1 me-2" 
                                     controlId="formBasicEmail"
                                 >
@@ -26,12 +37,16 @@ export default function SubEmail() {
                                         type="email"
                                         placeholder="Enter email"
                                         className="ms-auto"
+                                        onChange={handleOnChange}
                                     />
                                 </Form.Group>
-                                <Button type="submit">
+                                <Button onClick={() => {
+                                    dispatch(sendEmail(emailValue))
+                                    navigate('/')
+                                    }}>
                                 Subscribe
                                 </Button>
-                            </Form>
+                            </div>
                         </div>
                     </Col>
                 </Row>

@@ -35,9 +35,13 @@ export const getCartProduct = createAsyncThunk(
                 `/cart/${userId}.json?auth=${token}`
             );
             
+            if (res.data) {
+                return res.data
+            } else {
+                return {}
+            }
             
-            
-            return res.data;
+            // return res.data;
         } catch (error) {
             console.log(error);
         }
@@ -93,6 +97,8 @@ export const addCartCheck2 = createAsyncThunk(
 
 
             res.data.quantity = res.data.quantity + arg.quantity
+            // thunkApi.dispatch(getCartProduct())
+
 
             
             const res2 = await customAxios.patch(
@@ -157,6 +163,8 @@ export const productSlice = createSlice({
             .addCase(getCartProduct.pending, (state, action) => {})
             .addCase(getCartProduct.fulfilled, (state, action) => {
 
+                // console.log(action.payload);
+
                 if (action.payload.error) {
                     state.error = action.payload.error;
                 } else {
@@ -167,6 +175,8 @@ export const productSlice = createSlice({
                     })
                     state.cart = list
                 }
+
+            
             })
             .addCase(getCartProduct.rejected, (state, action) => {})
             // .addCase(addCartCheck2.pending, (state, action) => {})

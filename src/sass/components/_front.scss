@@ -101,7 +101,10 @@
 }
 
 .search__modal {
-    top: 80px;
+    top: 30px;
+    .modal-body, .modal-header {
+        padding: 15px 30px;
+    }
 }
 
 ul[role="navigation"] {
@@ -147,5 +150,24 @@ ul[role="navigation"] {
             align-items: center;
             justify-content: center;
         }
+    }
+}
+
+.breadcrumb {
+    position: relative;
+    margin-bottom: 50px;
+    img {
+        height:300px;
+        width: 100%;
+        object-fit: cover;
+        object-position: top center;
+    }
+    .breadcrumb__title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        letter-spacing: 1.5px;
     }
 }

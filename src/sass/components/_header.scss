@@ -46,6 +46,10 @@
             i {
                 font-size: 25px;
                 display: block;
+                cursor: pointer;
+                &:hover {
+                    color: $main-color;
+                }
             }
             button {
                 background-color: transparent;

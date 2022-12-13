@@ -4,11 +4,12 @@ import { useDispatch } from "react-redux";
 import { login } from "../redux/User/userSlice";
 import { API_KEY } from "../utils/constant";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Header from "../components/Header";
 import Footer from '../components/Footer'
+import Breadcrumb from "./Breadcrumb";
 
 
 export default function Login() {
@@ -39,9 +40,10 @@ export default function Login() {
     return (
         <>
             <Header></Header>
+            <Breadcrumb data={'Sign In'} />
             <div className="login-form">
                 <Container>
-                    <h1 className="mb-3">Sign In</h1>
+                    {/* <h1 className="mb-3">Sign In</h1> */}
                     <div className="mb-3">
                         <label className="mb-2">Email address</label>
                         <input
@@ -61,7 +63,7 @@ export default function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <div className="">
+                    <div className="mt-5">
                         <button
                             // type="submit"
                             className="btn btn-primary d-inline-flex"
@@ -70,6 +72,8 @@ export default function Login() {
                             Submit
                         </button>
                     </div>
+
+                    <Link className="mt-3 d-inline-block" to={"/signup"}>No account? Create one here</Link>
                 </Container>
             </div>
             <Footer />

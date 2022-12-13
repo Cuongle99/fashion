@@ -8,6 +8,7 @@ import { favouriteProducts, getListProduct } from "../redux/Product/productSlice
 import ReactPaginate from "react-paginate";
 import BackToTop from "../components/BackToTop";
 import { useParams } from "react-router-dom";
+import Breadcrumb from "../components/Breadcrumb";
 
 export default function Product() {
     const listProduct = useSelector((state) => state.productReducer);
@@ -51,6 +52,7 @@ export default function Product() {
     return (
         <>
             <Header />
+            <Breadcrumb data={'Products'} />
             <div className="product_List_pages">
                 <Container>
                     <Row>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
+import Breadcrumb from '../components/Breadcrumb'
 import CartItem from '../components/CartItem'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
@@ -25,11 +26,11 @@ export default function Cart() {
   return (
     <>
       <Header/>
+      <Breadcrumb data={'Shopping Cart'} />
       <Container>
         <Row>
-        <h2 className='mb-5'>Shopping Cart</h2>
           <Col sm={8}>
-          
+              
               {
                 listProduct?.map((item, index) => {
                   

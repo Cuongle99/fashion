@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -9,12 +9,12 @@ import logo from "../assets/images/logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/User/userSlice";
-import { signOut } from "firebase/auth";
-import { Button, Form, Modal } from "react-bootstrap";
+
+import SearchModal from "./SearchModal";
 
 export default function Header() {
     const [show, setShow] = useState(false);
-    const [showSearch, setShowSearch] = useState(false);
+    
 
     const token = useSelector((state) => state.userReducer.token);
     const dispatch = useDispatch();
@@ -32,10 +32,7 @@ export default function Header() {
         navigate("/home");
     };
 
-    const handleClose = () => {
-        setShowSearch(false);
-    }
-    const handleShow = () => setShowSearch(true);
+    
     return (
         <div className="header">
             <Navbar key="lg" expand="lg" className="">
@@ -77,7 +74,13 @@ export default function Header() {
                                         <Link to={"/product"}>Product</Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Link to={"/category"}>Category</Link>
+                                        <Link to={"/product/Men"}>Men</Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Link to={"/product/Women"}>Women</Link>
+                                    </Nav.Item>
+                                    <Nav.Item>
+                                        <Link to={"/product/Kids"}>Kids</Link>
                                     </Nav.Item>
                                 </NavDropdown>
                                 <Nav.Item>
@@ -96,28 +99,8 @@ export default function Header() {
                         <div
                             className="header__right__item"
                             
-                        >
-                            <i className="bx bx-search" onClick={handleShow}></i>
-                            <Modal size="lg" show={showSearch} onHide={handleClose} className='search__modal'>
-                                <Modal.Header closeButton>
-                                    <Modal.Title>Search Product</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <Form>
-                                        <Form.Group
-                                            className="mb-3"
-                                            controlId="exampleForm.ControlInput1"
-                                        >
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Name product"
-                                            />
-                                        </Form.Group>
-                                        
-                                    </Form>
-                                </Modal.Body>
-
-                            </Modal>
+                        >   
+                            <SearchModal />
                         </div>
                         <div className="header__right__item">
                             <Link to={"/favourite"}>

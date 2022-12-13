@@ -1,14 +1,18 @@
 import React from 'react'
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteCart } from '../redux/Product/productSlice';
+import { deleteCart, getCartProduct } from '../redux/Product/productSlice';
 
 export default function CartItem(props) {
 
     const numeral = require('numeral');
     const dispatch = useDispatch();
+
+    const cartDelete = () => {
+        dispatch(deleteCart(props.data.idCart))
+    }
   return (
-    <div className='cart__item'>
+    <div className='cart__item d-flex justify-content-between align-items-start'>
         <Link to={`/products/${props.data.idCart}`}>
         <img src={props.data?.image[0]} alt="" />
         <div className="cart__info">
@@ -21,11 +25,12 @@ export default function CartItem(props) {
             </div>
             
         </div>
-        <div className="cart__quantity">
-            <h3>x {props.data?.cartQuantity}</h3>
-            <i className='bx bx-trash' onClick={() => dispatch(deleteCart(props.data.idCart))}></i>
-        </div>
+        
         </Link>
+        <div className="cart__quantity d-flex">
+            <h3>x {props.data?.cartQuantity}</h3>
+            <i className='bx bx-trash' onClick={() => cartDelete()}></i>
+        </div>
     </div>
   )
 }

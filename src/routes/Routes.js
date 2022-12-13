@@ -3,11 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
+import Blog from "../pages/Blog";
+import BlogDetail from "../pages/BlogDetail";
 import Cart from "../pages/Cart";
 import Favourites from "../pages/Favourites";
 import Home from "../pages/Home";
 import Product from "../pages/Product";
 import ProductDetail from "../pages/ProductDetail";
+import ProductSearch from "../pages/ProductSearch";
 import { getListBlog } from "../redux/Blog/blogSlice";
 import { getCartProduct, getListProduct } from "../redux/Product/productSlice";
 import ProtectRouter from "./ProtectRouter";
@@ -30,6 +33,14 @@ const router = createBrowserRouter([
     element: <Product />,
   },
   {
+    path: "/blog",
+    element: <Blog />,
+  },
+  {
+    path: '/blog/:blogId',
+    element: <BlogDetail />,
+  },
+  {
     path: "/product/:category",
     element: <Product />,
   },
@@ -48,6 +59,10 @@ const router = createBrowserRouter([
   {
     path: '/favourite',
     element: <ProtectRouter><Favourites /></ProtectRouter>,
+  },
+  {
+    path: '/product-search',
+    element: <ProductSearch />,
   }
 ]);
 
