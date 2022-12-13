@@ -12,6 +12,21 @@
         padding: 0 15px 15px;
     }
 
+    .product__images {
+        position: relative;
+        .product__images__active {
+            transition: 0.4s all ease-in-out;
+        }
+        .product__images__hover {
+            transition: 0.4s all ease-in-out;
+            position: absolute;
+            inset: 0;
+            transform: scale(0.5);
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
     .product__category {
         margin-bottom: 8px;
         font-size: 16px;
@@ -87,6 +102,18 @@
             opacity: 1;
             visibility: visible;
             transform: none;
+        }
+        .product__images {
+            .product__images__active {
+                opacity: 0;
+                visibility: hidden;
+                transform: scale(0.5);
+            }
+            .product__images__hover {
+                opacity: 1;
+                visibility: visible;
+                transform: scale(1);
+            }
         }
     }
 }

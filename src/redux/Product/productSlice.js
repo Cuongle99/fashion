@@ -163,8 +163,6 @@ export const productSlice = createSlice({
             .addCase(getCartProduct.pending, (state, action) => {})
             .addCase(getCartProduct.fulfilled, (state, action) => {
 
-                // console.log(action.payload);
-
                 if (action.payload.error) {
                     state.error = action.payload.error;
                 } else {
@@ -179,21 +177,6 @@ export const productSlice = createSlice({
             
             })
             .addCase(getCartProduct.rejected, (state, action) => {})
-            // .addCase(addCartCheck2.pending, (state, action) => {})
-            // .addCase(addCartCheck2.fulfilled, (state, action) => {
-
-            //     if (action.payload.error) {
-            //         state.error = action.payload.error;
-            //     } else {
-            //         const carts = action.payload;
-
-            //         const list = Object.keys(carts).map(item => {
-            //             return {...carts[item].data, idCart: carts[item].id , cartQuantity: carts[item].quantity}
-            //         })
-            //         state.cart = list
-            //     }
-            // })
-            // .addCase(addCartCheck2.rejected, (state, action) => {})
 
             
             
@@ -203,39 +186,3 @@ export const productSlice = createSlice({
 export const { favouriteProduct,addCartCheck } = productSlice.actions;
 
 export default productSlice.reducer;
-
-
-
-// export const favouriteDel = createAsyncThunk(
-//     "products/delFavourite",
-//     async (arg, thunkApi) => {
-//         try {
-//             const token = thunkApi.getState().userReducer.token;
-//             const userId = thunkApi.getState().userReducer.localId;
-//             const res = await customAxios.delete(
-//                 `/favourite/${userId}/${arg}.json?auth=${token}`
-//             );
-//             return res.data;
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     }
-// );
-
-// export const getListFavourite = createAsyncThunk(
-//     "products/getListFavourite",
-//     async (arg, thunkApi) => {
-//         try {
-//             const token = thunkApi.getState().userReducer.token;
-//             const userId = thunkApi.getState().userReducer.localId;
-//             const res = await customAxios.get(
-//                 `/favourite/${userId}.json?auth=${token}`
-//             );
-
-            
-//             return res.data;
-//         } catch (error) {
-//             console.log(error);
-//         }
-//     }
-// );
