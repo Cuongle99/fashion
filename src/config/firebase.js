@@ -8,13 +8,13 @@ import {getAuth} from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBmQ3yzN9nIF2DNVisudN5zYdqI_evNba4",
-  authDomain: "fashion-store-c48a2.firebaseapp.com",
-  databaseURL: "https://fashion-store-c48a2-default-rtdb.firebaseio.com",
-  projectId: "fashion-store-c48a2",
-  storageBucket: "fashion-store-c48a2.appspot.com",
-  messagingSenderId: "83068559590",
-  appId: "1:83068559590:web:461d7c1972660c84995b27"
+  apiKey: "AIzaSyCfDICxp7oBAuvGTFdBz9B3cnqRKKGbf6c",
+  authDomain: "fashion-43836.firebaseapp.com",
+  databaseURL: "https://fashion-43836-default-rtdb.firebaseio.com",
+  projectId: "fashion-43836",
+  storageBucket: "fashion-43836.appspot.com",
+  messagingSenderId: "278542018282",
+  appId: "1:278542018282:web:54bf69ee3a4337881d5993"
 };
 
 // Initialize Firebase
@@ -22,3 +22,5 @@ const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+
+

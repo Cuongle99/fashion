@@ -12,6 +12,6 @@ export const checkTime = (time) => {
 }
 
 
-export const API_KEY = 'AIzaSyBmQ3yzN9nIF2DNVisudN5zYdqI_evNba4';
+export const API_KEY = 'AIzaSyCfDICxp7oBAuvGTFdBz9B3cnqRKKGbf6c';
 
 

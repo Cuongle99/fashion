@@ -225,6 +225,34 @@
             }
         }
     }
+    .product__variants {
+        margin-top: 30px;
+    }
+    .product__variants__item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        .control__label {
+            font-size: 16px;
+            font-weight: 500;
+            width: 100px;
+        }
+        ul {
+            margin-bottom: 0;
+            display: flex;
+            gap: 0 15px;
+            li {
+                font-size: 16px;
+                padding: 4px 10px;
+                line-height: 1;
+                border: 1px solid #eee;
+                cursor: pointer;
+                &.active {
+                    border-color: $main-color;
+                }
+            }
+        }
+    }
 }
 
 .product__detail__label {

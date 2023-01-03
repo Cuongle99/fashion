@@ -2,7 +2,7 @@ import { Numeral } from 'numeral';
 import React, {useEffect, useState} from 'react';
 import {Container, Row, Col, Button, Modal} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import {customAxios} from '../config/api';
@@ -15,11 +15,13 @@ const numeral = require('numeral');
 
 export default function ProductDetail() {
   const params = useParams();
-
   const productId = params.productId;
-
   const dispatch = useDispatch()
+  const navigate = useNavigate();
 
+
+  const [useSelectColor, setuseSelectColor] = useState(null);
+  const [useSelectSize, setuseSelectSize] = useState(null);
 
   const [quantity, setQuantity] = useState(1)
   const updateQuantity = (type) => {
@@ -32,7 +34,9 @@ export default function ProductDetail() {
 
   const listProduct = useSelector(state => state.productReducer);
   const token = useSelector(state => state.userReducer.token);
-  const productIndex = listProduct.data[productId]
+  const productIndex = listProduct?.data[productId]
+
+
 
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -40,15 +44,33 @@ export default function ProductDetail() {
 
   const carts = useSelector(state => state.productReducer.cart);
 
-    const addCartCheck1 = (datas) => {
-        const index =  carts?.findIndex(item => item.idCart === datas.id)
+  const addCartCheck1 = (datas) => {
 
-        if (index < 0) {
-            dispatch(addCart(datas))
-        } else {  
-            dispatch(addCartCheck2(datas))
-        }
+    const add = () => {
+      const index =  carts?.findIndex(item => item.idCart === datas.id)
+      
+      if (index < 0) {
+          dispatch(addCart(datas))
+      } else {  
+          dispatch(addCartCheck2(datas))
+      }
+      navigate('/cart')
     }
+
+    if(productIndex?.size) {
+      if (useSelectSize) {
+        add();
+      }
+    } else if (productIndex?.color) {
+      if (useSelectColor) {
+        add()
+      }
+    } else  {
+      add()
+    }
+      
+  }
+
 
 
 
@@ -80,6 +102,8 @@ export default function ProductDetail() {
       slidesToScroll: 1
     };
 
+    
+
   return (
     <>
         <Header />
@@ -108,6 +132,42 @@ export default function ProductDetail() {
                     <span className="product__price-sale"> {numeral(productIndex?.price - productIndex?.price*productIndex?.sale/100).format('$0,0.00')}</span> </>) : <span className="product__price-sale">{numeral(productIndex?.price).format('$0,0.00')}</span>}
                       </div>
                       <p className='product__description mt-3'>{productIndex?.description}</p>
+
+                      <div className="product__variants">
+                      {
+                        productIndex?.color ? <div className="product__variants__item color">
+                            <span className="control__label">Color: </span>
+                            <ul>
+                              {
+                                productIndex && productIndex?.color?.map((item, index) => {
+                                  return <li key={index} className={index === useSelectColor ? "active" : null} onClick = {() => {
+                                    index === useSelectColor ? setuseSelectColor(null) : setuseSelectColor(index);
+                                  }}>{item}</li>
+                                })
+                              }
+                            </ul>
+                          </div> : null
+                      }
+
+                      {
+                        productIndex?.size ? <div className="product__variants__item size">
+                            <span className="control__label">Size: </span>
+                            <ul>
+                              {
+                                productIndex && productIndex?.size?.map((item, index) => {
+                                  return <li key={index} className={index === useSelectSize ? "active" : null} onClick = {() => {
+                                    index === useSelectSize ? setuseSelectSize(null) : setuseSelectSize(index);
+                                  }}>{item}</li>
+                                })
+                              }
+                            </ul>
+                          </div> : null
+                      }
+                          
+
+                          
+                      </div>
+
                       <div className='add-to-cart mt-5 mb-5'>
                       <div className="add-cart-quantity">
                         <div className="addCart__quantity__btn minus" onClick={() => updateQuantity('minus')}>
