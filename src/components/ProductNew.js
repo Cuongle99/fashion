@@ -34,7 +34,7 @@ export default function ProductNew() {
           {
             listProduct.data && Object.keys(listProduct.data).map(key => {
 
-              if(checkTime(listProduct.data[key].timeupload) < 50) {
+              if(checkTime(listProduct.data[key].timeupload) < 100) {
                 return <ProductItem data={listProduct.data[key]} key={key} id={key} />
               }
             })
