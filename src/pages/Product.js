@@ -9,6 +9,7 @@ import ReactPaginate from "react-paginate";
 import BackToTop from "../components/BackToTop";
 import { useParams } from "react-router-dom";
 import Breadcrumb from "../components/Breadcrumb";
+import ProductFilter from "../components/ProductFilter";
 
 export default function Product() {
     const listProduct = useSelector((state) => state.productReducer);
@@ -57,7 +58,7 @@ export default function Product() {
                 <Container>
                     <Row>
                         <Col md={3}>
-                            <div className="product__filter"></div>
+                                <ProductFilter />
                         </Col>
                         <Col md={9}>
                             <div className="product__list">
