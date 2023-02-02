@@ -6,20 +6,41 @@ const initialState = {
     data: {}
 };
 
+export const getListEmailClient = createAsyncThunk(
+    "client/getListEmail",
+    async (arg, thunkApi) => {
+        const res = await customAxios.get(`/emails.json`);
+        return res.data
+    }
+);
+
 export const sendEmail = createAsyncThunk(
     "client/postemail",
     async (arg, thunkApi) => {
-        const email = {arg}
-        const res = await customAxios.post(`/emails.json`, email);
-        return res.data
+        try {
+            const res = await customAxios.post(`/emails.json`, {arg});
+            thunkApi.dispatch(getListEmailClient());
+            return res.data
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
 );
 
 
 export const EmailSlice = createSlice({
-    name: 'blog',
+    name: 'emails',
     initialState,
     reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(getListEmailClient.pending, (state, action) => {})
+            .addCase(getListEmailClient.fulfilled, (state, action) => {
+                const listEmail = action.payload;
+                state.data = listEmail;
+            })
+            .addCase(getListEmailClient.rejected, (state, action) => {})
+    }
 })
 
 

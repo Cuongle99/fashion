@@ -12,6 +12,7 @@ import Product from "../pages/Product";
 import ProductDetail from "../pages/ProductDetail";
 import ProductSearch from "../pages/ProductSearch";
 import { getListBlog } from "../redux/Blog/blogSlice";
+import { getListEmailClient } from "../redux/ClientEmail/EmailSlice";
 import { getCartProduct, getListProduct } from "../redux/Product/productSlice";
 import ProtectRouter from "./ProtectRouter";
 
@@ -76,6 +77,7 @@ export default function Routes() {
     dispatch(getListProduct());
     dispatch(getListBlog());
     dispatch(getCartProduct());
+    // dispatch(getListEmailClient())
   }, [token]);
 
   return (

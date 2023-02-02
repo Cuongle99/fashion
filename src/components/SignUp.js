@@ -1,17 +1,17 @@
-import React, {useState} from 'react'
-import { Container} from "react-bootstrap";
-import Footer from './Footer';
-import Header from './Header';
-import {API_KEY} from '../utils/constant';
-import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import Breadcrumb from './Breadcrumb';
+import React, { useState } from "react";
+import { Container } from "react-bootstrap";
+import Footer from "./Footer";
+import Header from "./Header";
+import { API_KEY } from "../utils/constant";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import Breadcrumb from "./Breadcrumb";
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 export default function SignUp() {
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setconfirmPassword] = useState("");
     const navigate = useNavigate();
 
     const [show, setShow] = useState(false);
@@ -19,77 +19,91 @@ export default function SignUp() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const submit = async () => {
-        try {
+    const schema = yup.object().shape({
+        email: yup.string().email().required(),
+        password: yup.string().min(8).max(32).required(),
+        confirmPassword: yup
+            .string()
+            .oneOf([yup.ref("password"), null], "Passwords must match"),
+    });
 
-            if(confirmPassword === password) {
+
+    const {
+        register,
+        formState: { errors },
+        handleSubmit,
+        reset,
+    } = useForm({
+        resolver: yupResolver(schema),
+    });
+
+    const submit = async (value) => {
+        try {
+            if (value.confirmPassword === value.password) {
                 const res = await axios.post(
                     `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`,
                     {
-                        email: email,
-                        password: password,
+                        email: value.email,
+                        password: value.password,
                         returnSecureToken: true,
                     }
                 );
-                navigate('/signin')
+                navigate("/signin");
             }
-            
-            
         } catch (error) {
             console.log(error);
         }
-        
-    }
+    };
 
-  return (
-    <>
-            <Header/>
-            <Breadcrumb data={'Sign Up'} />
+    return (
+        <>
+            <Header />
+            <Breadcrumb data={"Sign Up"} />
             <div className="login-form">
                 <Container>
-                    <div className="mb-3">
+
+                    <form onSubmit={handleSubmit(submit)}>
                         <label className="mb-2">Email address</label>
                         <input
                             type="email"
                             className="form-control"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="Your email"
+                            {...register("email")}
+                            required
                         />
-                    </div>
-                    <div className="mb-3">
+                        <p>{errors.email?.message}</p>
                         <label className="mb-2">Password</label>
                         <input
                             type="password"
                             className="form-control"
                             placeholder="Enter password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            {...register("password")}
+                            required
                         />
-                    </div>
-                    <div className="mb-3">
+                        <p>{errors.password?.message}</p>
                         <label className="mb-2">Confirm Password</label>
                         <input
                             type="password"
                             className="form-control"
                             placeholder="Enter password"
-                            value={confirmPassword}
-                            onChange={(e) => setconfirmPassword(e.target.value)}
+                            {...register("confirmPassword")}
+                            required
                         />
-                    </div>
-                    <div className="mt-5">
+                        <p>{errors.confirmPassword?.message}</p>
                         <button
-                            // type="submit"
-                            className="btn btn-primary d-inline-flex"
-                            onClick={() => submit()}
+                            type="submit"
+                            className="btn btn-primary d-inline-flex mt-5"
                         >
                             Submit
                         </button>
-                    </div>
-                    <Link className='mt-3 d-inline-block' to={'/signin'}> Sign in now</Link>
+                    </form>
+                    <Link className="mt-3 d-inline-block" to={"/signin"}>
+                        {" "}
+                        Sign in now
+                    </Link>
                 </Container>
             </div>
             <Footer />
-            
         </>
-  )
+    );
 }
