@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Modal } from "react-bootstrap";
 import Footer from "./Footer";
 import Header from "./Header";
 import { API_KEY } from "../utils/constant";
@@ -14,10 +14,9 @@ import * as yup from "yup";
 export default function SignUp() {
     const navigate = useNavigate();
 
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
 
     const schema = yup.object().shape({
         email: yup.string().email().required(),
@@ -52,6 +51,7 @@ export default function SignUp() {
             }
         } catch (error) {
             console.log(error);
+            setShowModal(true)
         }
     };
 
@@ -102,6 +102,11 @@ export default function SignUp() {
                         Sign in now
                     </Link>
                 </Container>
+                <Modal show={showModal} onHide={handleClose} animation={true}>
+                    <Modal.Body>
+                    This email has been used for registration. <br /> Please use another email to register
+                    </Modal.Body>
+                </Modal>
             </div>
             <Footer />
         </>

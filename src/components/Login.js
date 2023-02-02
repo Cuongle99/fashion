@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Modal } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/User/userSlice";
 import { API_KEY } from "../utils/constant";
@@ -18,8 +18,9 @@ import * as yup from "yup";
 export default function Login() {
     const dispatch = useDispatch();
 
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
+    const handleShow = () => setShowModal(true);
     const navigate = useNavigate();
 
     const schema = yup.object().shape({
@@ -51,6 +52,7 @@ export default function Login() {
             navigate("/home");
         } catch (error) {
             console.log(error);
+            setShowModal(true)
         }
     };
 
@@ -95,6 +97,14 @@ export default function Login() {
                     <Link className="mt-3 d-inline-block" to={"/signup"}>
                         No account? Create one here
                     </Link>
+                    <Modal show={showModal} onHide={handleClose} animation={true}>
+                    <Modal.Body>
+                            Incorrect account or password
+                            <Link className="d-inline-block ms-2" to={"/signup"}>
+                                No account? Create one here
+                            </Link>
+                        </Modal.Body>
+                    </Modal>
                 </Container>
             </div>
             <Footer />
