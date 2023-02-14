@@ -32,9 +32,17 @@ export default function ProductDetail() {
     }
 }
 
+console.log(useSelectSize, useSelectColor);
+
   const listProduct = useSelector(state => state.productReducer);
   const token = useSelector(state => state.userReducer.token);
   const productIndex = listProduct?.data[productId]
+
+
+  
+
+
+
 
 
 
@@ -44,7 +52,21 @@ export default function ProductDetail() {
 
   const carts = useSelector(state => state.productReducer.cart);
 
+  window.scrollTo({
+    top: 0, behavior: 'smooth'
+  })
+
+
+
+  useEffect(() => {
+    
+    
+  
+  });
+
   const addCartCheck1 = (datas) => {
+
+   
 
     const add = () => {
       const index =  carts?.findIndex(item => item.idCart === datas.id)
@@ -57,18 +79,20 @@ export default function ProductDetail() {
       navigate('/cart')
     }
 
-    if(productIndex?.size) {
-      if (useSelectSize) {
-        add();
-      }
-    } else if (productIndex?.color) {
-      if (useSelectColor) {
-        add()
-      }
-    } else  {
+    if (useSelectSize !== null && useSelectColor !== null) {
+      add();
+    } else if ( productIndex?.color == undefined && useSelectSize !== null) {
       add()
+    } else if ( productIndex?.size == undefined && useSelectColor !== null) {
+      add()
+    } else if (productIndex?.size == undefined && productIndex?.color == undefined) {
+      add()
+    } else {
+      alert('loi')
     }
-      
+
+
+  
   }
 
 

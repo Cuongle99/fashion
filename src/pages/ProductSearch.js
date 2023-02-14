@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Breadcrumb from "../components/Breadcrumb";
@@ -9,6 +9,12 @@ import ProductItem from "../components/ProductItem";
 export default function ProductSearch() {
     const searchProducts = useSelector((state) => state.searchReducer.data);
     const listProducts = useSelector((state) => state.productReducer.data);
+    
+    useEffect(() => {
+        window.scrollTo({
+            top: 0, behavior: "smooth"
+        })
+    });
 
     return (
         <>

@@ -1,4 +1,4 @@
-import React from "react";
+import React,  {useEffect} from "react";
 import { Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -14,6 +14,12 @@ export default function BlogDetail() {
 
     const currentBlog = listBlog[index];
 
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0, behavior: "smooth"
+        })
+    });
     return (
         <>
             <Header />

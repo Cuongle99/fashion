@@ -8,6 +8,11 @@ import ProductItem from "../components/ProductItem";
 
 export default function Favourites() {
     const listProduct = useSelector((state) => state.productReducer.data);
+    useEffect(() => {
+        window.scrollTo({
+            top: 0, behavior: "smooth"
+        })
+    });
 
     return (
         <>  

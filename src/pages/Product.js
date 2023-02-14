@@ -28,6 +28,12 @@ export default function Product() {
         }
     })
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0, behavior: "smooth"
+        })
+    });
+
     
 
 

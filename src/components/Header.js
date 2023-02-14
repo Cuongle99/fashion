@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -14,11 +14,38 @@ import SearchModal from "./SearchModal";
 
 export default function Header() {
     const [show, setShow] = useState(false);
+    const [countCart, setcountCart] = useState(0)
     
 
     const token = useSelector((state) => state.userReducer.token);
+    const listProduct = useSelector((state) => state.productReducer);
+
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const countWishlist = Object.keys(listProduct?.data).filter(item => {
+        return listProduct?.data[item].isFavourite === true
+    }) 
+
+
+    useEffect(() => {
+        let count = 0;
+
+        listProduct?.cart.map(item => {
+            count = count + item.cartQuantity
+        })
+
+        setcountCart(count);
+        
+    });
+
+
+    
+
+
+
+    
 
     const showDropdown = (e) => {
         setShow(!show);
@@ -105,11 +132,14 @@ export default function Header() {
                         <div className="header__right__item">
                             <Link to={"/favourite"}>
                                 <i className="bx bx-heart"></i>
+                                <span>{countWishlist.length}</span>
                             </Link>
                         </div>
                         <div className="header__right__item">
                             <Link to="/cart">
                                 <i className="bx bx-shopping-bag"></i>
+                                {token ? <span>{countCart}</span> : null}
+                                
                             </Link>
                         </div>
                         <Dropdown className="header__right__item">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import Breadcrumb from '../components/Breadcrumb'
@@ -9,6 +9,12 @@ import BlogItem from '../components/BlogItem'
 export default function Blog() {
 
   const listBlog = useSelector(state => state.blogReducer.data)
+
+  useEffect(() => {
+    window.scrollTo({
+        top: 0, behavior: "smooth"
+    })
+});
   
   return (
     <>

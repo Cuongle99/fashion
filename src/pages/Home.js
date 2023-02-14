@@ -21,10 +21,11 @@ export default function Home() {
   // const dispatch = useDispatch();
 
 
-  // useEffect(() => {
-  //   dispatch(getListProduct());
-  //   dispatch(getListBlog());
-  // });
+  useEffect(() => {
+    window.scrollTo({
+        top: 0, behavior: "smooth"
+    })
+});
 
   return (
     <>

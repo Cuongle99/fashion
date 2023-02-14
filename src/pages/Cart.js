@@ -9,6 +9,12 @@ import Header from '../components/Header'
 export default function Cart() {
   const numeral = require('numeral');
 
+  useEffect(() => {
+    window.scrollTo({
+        top: 0, behavior: "smooth"
+    })
+});
+
 
   const listProduct = useSelector((state) => state.productReducer.cart);
 
