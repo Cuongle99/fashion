@@ -28,6 +28,19 @@ export default function Product() {
         }
     })
 
+    const [dataFillterCate, setdataFillterCate] = useState(null);
+    const [dataFillterColor, setdataFillterColor] = useState(null);
+    const [dataFillterSize, setdataFillterSize] = useState(null);
+
+    const products3 = products.filter(([id, item]) => {
+        
+        if(dataFillterCate?.find(e => e === item.category)) {
+            return [id, item]
+        }
+    })
+
+    console.log(products3);
+
     useEffect(() => {
         window.scrollTo({
             top: 0, behavior: "smooth"
@@ -46,15 +59,24 @@ export default function Product() {
     const [itemOffset, setItemOffset] = useState(0);
 
     const endOffset = itemOffset + itemsPerPage;
-    const currentItems = products2.slice(itemOffset, endOffset);
+    // const currentItems = products2.slice(itemOffset, endOffset);
+    const currentItems =products3.length > 0 ?  products3.slice(itemOffset, endOffset) : products2.slice(itemOffset, endOffset);
 
     
-    const pageCount = Math.ceil(products2.length / itemsPerPage);
+    const pageCount = products3.length > 0 ? Math.ceil(products3.length / itemsPerPage) : Math.ceil(products2.length / itemsPerPage);
 
     const handlePageClick = (event) => {
-        const newOffset = (event.selected * itemsPerPage) % products2.length;
+        const newOffset = products3.length > 0 ? (event.selected * itemsPerPage) % products3.length : (event.selected * itemsPerPage) % products2.length;
         setItemOffset(newOffset);
     };
+
+    const fillterData = (data) => {
+        setdataFillterCate(data.cate);
+        setdataFillterColor(data.color)
+        setdataFillterSize(data.size)
+
+    }
+
 
     return (
         <>
@@ -64,7 +86,7 @@ export default function Product() {
                 <Container>
                     <Row>
                         <Col md={3}>
-                                <ProductFilter />
+                                <ProductFilter fillterData={fillterData} />
                         </Col>
                         <Col md={9}>
                             <div className="product__list">
