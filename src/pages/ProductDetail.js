@@ -81,11 +81,11 @@ console.log(useSelectSize, useSelectColor);
 
     if (useSelectSize !== null && useSelectColor !== null) {
       add();
-    } else if ( productIndex?.color == undefined && useSelectSize !== null) {
+    } else if ( productIndex?.color === undefined && useSelectSize !== null) {
       add()
-    } else if ( productIndex?.size == undefined && useSelectColor !== null) {
+    } else if ( productIndex?.size === undefined && useSelectColor !== null) {
       add()
-    } else if (productIndex?.size == undefined && productIndex?.color == undefined) {
+    } else if (productIndex?.size === undefined && productIndex?.color === undefined) {
       add()
     } else {
       alert('loi')
