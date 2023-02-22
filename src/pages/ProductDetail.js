@@ -32,7 +32,6 @@ export default function ProductDetail() {
     }
 }
 
-console.log(useSelectSize, useSelectColor);
 
   const listProduct = useSelector(state => state.productReducer);
   const token = useSelector(state => state.userReducer.token);
@@ -52,17 +51,9 @@ console.log(useSelectSize, useSelectColor);
 
   const carts = useSelector(state => state.productReducer.cart);
 
-  window.scrollTo({
-    top: 0, behavior: 'smooth'
-  })
-
-
-
-  useEffect(() => {
-    
-    
-  
-  });
+  // window.scrollTo({
+  //   top: 0, behavior: 'smooth'
+  // })
 
   const addCartCheck1 = (datas) => {
 

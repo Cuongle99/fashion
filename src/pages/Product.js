@@ -28,24 +28,52 @@ export default function Product() {
         }
     })
 
+
     const [dataFillterCate, setdataFillterCate] = useState(null);
     const [dataFillterColor, setdataFillterColor] = useState(null);
     const [dataFillterSize, setdataFillterSize] = useState(null);
 
     const products3 = products.filter(([id, item]) => {
-        
-        if(dataFillterCate?.find(e => e === item.category)) {
+        if (dataFillterCate === 'All') {
             return [id, item]
+        } else {
+            return dataFillterCate === item.category
         }
     })
 
-    console.log(products3);
+    const products5 = products3.filter(([id, item]) => {
+        if (dataFillterColor === 'All') {
+            return [id, item]
+        } else {
 
-    useEffect(() => {
-        window.scrollTo({
-            top: 0, behavior: "smooth"
-        })
-    });
+            return item?.color?.findIndex(itemColor => itemColor === dataFillterColor.toLocaleLowerCase()) >= 0
+        }
+    })
+
+    const products4 = products5.filter(([id, item]) => {
+        if (dataFillterSize === 'All') {
+            return [id, item]
+        } else {
+
+            return item?.size?.findIndex(itemSize => itemSize.toLocaleLowerCase() === dataFillterSize.toLocaleLowerCase()) >= 0
+        }
+    })
+
+
+
+
+   
+
+
+
+    
+    // console.log(products3);
+
+    // useEffect(() => {
+    //     window.scrollTo({
+    //         top: 0, behavior: "smooth"
+    //     })
+    // });
 
     
 
@@ -60,13 +88,17 @@ export default function Product() {
 
     const endOffset = itemOffset + itemsPerPage;
     // const currentItems = products2.slice(itemOffset, endOffset);
-    const currentItems =products3.length > 0 ?  products3.slice(itemOffset, endOffset) : products2.slice(itemOffset, endOffset);
+    // const currentItems =products4.length > 0 ?  products4.slice(itemOffset, endOffset) : products2.slice(itemOffset, endOffset);
+    const currentItems = products4.slice(itemOffset, endOffset)
 
     
-    const pageCount = products3.length > 0 ? Math.ceil(products3.length / itemsPerPage) : Math.ceil(products2.length / itemsPerPage);
+    // const pageCount = products4.length > 0 ? Math.ceil(products4.length / itemsPerPage) : Math.ceil(products2.length / itemsPerPage);
+    const pageCount = Math.ceil(products4.length / itemsPerPage)
 
     const handlePageClick = (event) => {
-        const newOffset = products3.length > 0 ? (event.selected * itemsPerPage) % products3.length : (event.selected * itemsPerPage) % products2.length;
+        // const newOffset = products4.length > 0 ? (event.selected * itemsPerPage) % products4.length : (event.selected * itemsPerPage) % products2.length;
+
+        const newOffset = (event.selected * itemsPerPage) % products4.length 
         setItemOffset(newOffset);
     };
 

@@ -1,56 +1,26 @@
 import React,  {useState, useEffect} from 'react'
-import { Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 
 
 export default function ProductFilter(props) {
 
 
-    const allCategories  = ['Men', 'Women', 'Kids'];
-    const allColor = ['Black', 'White', 'Pink', 'Blue', 'Red']
-    const allSize = ['S', 'M', 'L', 'XL', 'XXL']
+    const allCategories  = ['All','Men', 'Women', 'Kids'];
+    const allColor = ['All','Black', 'White', 'Pink', 'Blue', 'Red']
+    const allSize = ['All', 'S', 'M', 'L', 'XL', 'XXL']
 
-    const [selectCategories, setselectCategories] = useState([]);
-    const [selectColor, setselectColor] = useState([]);
-    const [selectSize, setselectSize] = useState([]);
+    const [selectCategories, setselectCategories] = useState('All');
+    const [selectColor, setselectColor] = useState('All');
+    const [selectSize, setselectSize] = useState('All');
 
     const handleSelectCategories = (e) => {
-        if(e.target.checked) {
-            const newArr = [...selectCategories, e.target.value];
-            setselectCategories(newArr);
-        } else {
-            const newArr = selectCategories.filter(item  => {
-                return item !== e.target.value;
-            })
-
-            setselectCategories(newArr)
-        }
-        // props.fillterData(selectCategories)
+            setselectCategories(e.target.value);
     }
     const handleSelectColor = (e) => {
-        if(e.target.checked) {
-            const newArr = [...selectColor, e.target.value];
-            setselectColor(newArr);
-        } else {
-            const newArr = selectColor.filter(item  => {
-                return item !== e.target.value;
-            })
-
-            setselectColor(newArr)
-        }
-        // props.fillterData(selectCategories)
+        setselectColor(e.target.value)
     }
     const handleSelectSize = (e) => {
-        if(e.target.checked) {
-            const newArr = [...selectSize, e.target.value];
-            setselectSize(newArr);
-        } else {
-            const newArr = selectSize.filter(item  => {
-                return item !== e.target.value;
-            })
-
-            setselectSize(newArr)
-        }
-        // props.fillterData(set)
+        setselectSize(e.target.value)
     }
 
 
@@ -75,8 +45,9 @@ export default function ProductFilter(props) {
                     label={item}
                     key={index}
                     value={item}
+                    checked={item === selectCategories ? true : false}
                     name="group1"
-                    type="checkbox" className='mb-2'
+                    type="radio" className='mb-2'
                     onChange={handleSelectCategories}
                 />
                 })
@@ -94,8 +65,9 @@ export default function ProductFilter(props) {
                     label={item}
                     value={item}
                     key={index}
-                    name="group1"
-                    type="checkbox" className='mb-2'
+                    checked={item === selectColor ? true : false}
+                    name="group2"
+                    type="radio" className='mb-2'
                     onChange={handleSelectColor}
                 />
                 })
@@ -113,8 +85,9 @@ export default function ProductFilter(props) {
                     key={index}
                     value={item}
                     label={item}
-                    name="group1"
-                    type="checkbox" className='mb-2'
+                    checked={item === selectSize ? true : false}
+                    name="group3"
+                    type="radio" className='mb-2'
                     onChange={handleSelectSize}
                 />
                 })
