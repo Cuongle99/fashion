@@ -2,7 +2,10 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
     token: localStorage.getItem("token"),
-    localId: localStorage.getItem("localId")
+    localId: localStorage.getItem("localId"),
+      adminToken: localStorage.getItem('adminToken'),
+      adminLocalIdToken: localStorage.getItem('adminLocalId')
+    
 };
 
 const userSlice = createSlice({
@@ -21,9 +24,15 @@ const userSlice = createSlice({
       localStorage.removeItem('token')
       localStorage.removeItem('localId')
     },
+    loginAdmin: (state, actions) => {
+      state.adminToken = actions.payload.idToken;
+      state.adminLocalId = actions.payload.localId;
+      localStorage.setItem("adminToken", actions.payload.idToken);
+      localStorage.setItem("adminLocalId", actions.payload.localId);
+    },
   },
 });
 
-export const {login, logout} = userSlice.actions;
+export const {login, logout, loginAdmin} = userSlice.actions;
 
 export default userSlice.reducer;

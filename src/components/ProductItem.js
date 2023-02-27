@@ -73,7 +73,7 @@ export default function ProductItem(props) {
                                 {"-" + props.data.sale + "%"}
                             </span>
                         ) : null}
-                        {checkTime(props.data.timeupload) < 100 ? (
+                        {checkTime(props.data.timeupload) < 150 ? (
                             <span className="product__flag new"> New </span>
                         ) : null}
                     </div>

@@ -98,7 +98,7 @@ export default function Header() {
                                     onMouseLeave={hideDropdown}
                                 >
                                     <Nav.Item>
-                                        <Link to={"/product"}>Product</Link>
+                                        <Link to={"/product/All"}>Product</Link>
                                     </Nav.Item>
                                     <Nav.Item>
                                         <Link to={"/product/Men"}>Men</Link>

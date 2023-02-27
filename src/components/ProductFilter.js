@@ -1,9 +1,11 @@
 import React,  {useState, useEffect} from 'react'
 import { Button, Form } from 'react-bootstrap'
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export default function ProductFilter(props) {
 
+    const navigate = useNavigate();
 
     const allCategories  = ['All','Men', 'Women', 'Kids'];
     const allColor = ['All','Black', 'White', 'Pink', 'Blue', 'Red']
@@ -13,8 +15,18 @@ export default function ProductFilter(props) {
     const [selectColor, setselectColor] = useState('All');
     const [selectSize, setselectSize] = useState('All');
 
+
+    const params = useParams()
+
+
+    useEffect(() => {
+        setselectCategories(params.category)
+    }, [params?.category]);
+    
+
     const handleSelectCategories = (e) => {
             setselectCategories(e.target.value);
+            navigate(`/product/${e.target.value}`)
     }
     const handleSelectColor = (e) => {
         setselectColor(e.target.value)

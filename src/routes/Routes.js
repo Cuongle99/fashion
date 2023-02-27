@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
+import AdminLogin from "../pages/admin/AdminLogin";
 import Blog from "../pages/Blog";
 import BlogDetail from "../pages/BlogDetail";
 import Cart from "../pages/Cart";
@@ -64,7 +65,11 @@ const router = createBrowserRouter([
   {
     path: '/product-search',
     element: <ProductSearch />,
-  }
+  },
+  {
+    path: '/admincp',
+    element: <AdminLogin />,
+  },
 ]);
 
 export default function Routes() {
