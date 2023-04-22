@@ -45,6 +45,8 @@ export default function AdminLogin() {
                     returnSecureToken: true,
                 }
             );
+            
+                
             await signInWithEmailAndPassword(auth, value.email, value.password);
             dispatch(loginAdmin(res.data));
             navigate("/home");

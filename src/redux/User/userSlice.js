@@ -3,8 +3,8 @@ import {createSlice} from '@reduxjs/toolkit';
 const initialState = {
     token: localStorage.getItem("token"),
     localId: localStorage.getItem("localId"),
-      adminToken: localStorage.getItem('adminToken'),
-      adminLocalIdToken: localStorage.getItem('adminLocalId')
+    adminToken: localStorage.getItem('adminToken'),
+    adminLocalIdToken: localStorage.getItem('adminLocalId')
     
 };
 

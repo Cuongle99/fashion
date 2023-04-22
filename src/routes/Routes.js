@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
-import AdminLogin from "../pages/admin/AdminLogin";
 import Blog from "../pages/Blog";
 import BlogDetail from "../pages/BlogDetail";
 import Cart from "../pages/Cart";
@@ -16,6 +15,7 @@ import { getListBlog } from "../redux/Blog/blogSlice";
 import { getListEmailClient } from "../redux/ClientEmail/EmailSlice";
 import { getCartProduct, getListProduct } from "../redux/Product/productSlice";
 import ProtectRouter from "./ProtectRouter";
+import AdminPages from "../pages/admin/AdminPages";
 
 const router = createBrowserRouter([
   {
@@ -68,7 +68,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/admincp',
-    element: <AdminLogin />,
+    element: <AdminPages />,
   },
 ]);
 

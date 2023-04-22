@@ -24,6 +24,21 @@ export const getListProduct = createAsyncThunk(
 );
 
 
+export const editProduct = createAsyncThunk(
+    "products/editProduct",
+    async (arg, thunkApi) => {
+        try {
+            console.log(arg);
+            const res = await customAxios.patch(`/products/${arg.id}.json`, arg.dataEdit)
+            thunkApi.dispatch(getListProduct())
+            return res.data
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)
+
+
 
 export const getCartProduct = createAsyncThunk(
     "products/getCartProduct",
