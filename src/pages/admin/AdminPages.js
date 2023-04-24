@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Table from 'react-bootstrap/Table';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { editProduct } from '../../redux/Product/productSlice';
 
@@ -15,14 +15,20 @@ export default function AdminPages() {
   const [show, setShow] = useState(false);
   const [id, setId] = useState('');
   const [dataEdit, setDataEdit] = useState('')
+  const [sizeAdd, setSizeAdd] = useState(false);
+  const [size , setSize] = useState('')
+  const [colorAdd, setColorAdd] = useState(false);
+  const [color , setColor] = useState('')
   const dispatch = useDispatch();
+
+
   
 
 
   const handleShow =(id, item) => {
     setShow(true);
     setId(id)
-    setDataEdit(item)
+    setDataEdit(item);
   }
 
   const handleSubmit = () => {
@@ -47,6 +53,81 @@ export default function AdminPages() {
     newObj.description = e.target.value;
     setDataEdit(newObj)
   }
+  const handleChangePrice = (e) => {
+    const newObj = {...dataEdit}
+    newObj.price = e.target.value;
+    setDataEdit(newObj)
+  }
+  const handleChangeQuantity = (e) => {
+    const newObj = {...dataEdit}
+    newObj.quantity = e.target.value;
+    setDataEdit(newObj)
+  }
+  const handleChangeSale = (e) => {
+    const newObj = {...dataEdit}
+    newObj.sale = e.target.value;
+    setDataEdit(newObj)
+  }
+
+
+  const handleRemoveSize = (item) => {
+    const newObj = {...dataEdit}
+    const newArr = newObj.size?.filter( e => e !== item)
+    newObj.size = newArr
+    setDataEdit(newObj)
+  }
+
+
+  const handleChangeSize = (e) => {
+    setSize(e.target.value.toUpperCase())
+  } 
+
+  const handleKeyDownSize = (e) => {
+    if (e.key === 'Enter') {
+      setSizeAdd(false);
+      setSize('');
+      const newObj = {...dataEdit}
+      if (!newObj?.size) {
+        newObj.size = []
+      }
+
+
+      const newArr = [...newObj?.size, size]
+      newObj.size = newArr
+      setDataEdit(newObj);
+    }
+  }
+  const handleRemoveColor = (item) => {
+    const newObj = {...dataEdit}
+    const newArr = newObj.color?.filter( e => e !== item)
+    newObj.color = newArr
+    setDataEdit(newObj)
+  }
+
+
+  const handleChangeColor = (e) => {
+    
+    setColor(e.target.value)
+    
+  } 
+
+  const handleKeyDownColor = (e) => {
+    if (e.key === 'Enter') {
+      setColorAdd(false);
+      
+      const newObj = {...dataEdit}
+      if (!newObj?.color) {
+        newObj.color = []
+      }
+      const newArr = [...newObj?.color, size]
+      newObj.color = newArr
+      setDataEdit(newObj);
+      setColor('');
+    }
+  }
+
+  
+
 
   
 
@@ -102,15 +183,84 @@ export default function AdminPages() {
         <Modal.Body>
 
           <Form>
-            <Form.Label>Name</Form.Label>
-            <Form.Control type='text' value={dataEdit?.name}  onChange={handleChangeName} />
+            
+
+            <Row>
+              <Col xs={3}>
+                <Form.Label>Name</Form.Label>
+                <Form.Control type='text' value={dataEdit?.name}  onChange={handleChangeName} />
+              </Col>
+              <Col xs={3}>
+                <Form.Label>Category</Form.Label>
+                <Form.Control type='text' value={dataEdit?.category}  onChange={handleChangeCategoty} />
+              </Col>
+
+            </Row>
+            
+            <Row>
+              <Col xs={6}>
+                <Form.Label className='mt-3'>Description</Form.Label>
+                <Form.Control type='text' as="textarea" value={dataEdit?.description}  onChange={handleChangeDescription} />
+              </Col>
+            </Row>
+
+            <Row>
+              <Col xs={2}>
+                <Form.Label className='mt-3'>Price</Form.Label>
+                <Form.Control type='number' value={dataEdit?.price} onChange={handleChangePrice} />
+              </Col>
+              <Col xs={2}>
+                <Form.Label className='mt-3'>Quantity</Form.Label>
+                <Form.Control type='number' value={dataEdit?.quantity} onChange={handleChangeQuantity} />
+              </Col>
+              <Col xs={2}>
+                <Form.Label className='mt-3'>Sale</Form.Label>
+                <Form.Control type='number' value={dataEdit?.sale} onChange={handleChangeSale} />
+              </Col>
+
+            </Row>
 
 
-            <Form.Label className='mt-3'>CateGory</Form.Label>
-            <Form.Control type='text' value={dataEdit?.category}  onChange={handleChangeCategoty} />
+            <Row>
+              <Col xs={3}>
+              
+           
+              <Form.Group controlId="size">
+                <Form.Label className='mt-3'>Size  <span className='add' onClick={() => setSizeAdd(true)}><i className='bx bx-plus' ></i></span></Form.Label>
+                <Form.Control  onChange={handleChangeSize} onKeyDown={handleKeyDownSize} value={size ? size : ''} type="text" style={{display: sizeAdd ? 'block' : 'none'}}></Form.Control>
+              </Form.Group>
+              
+                <ul>
+                  {dataEdit?.size?.map((item, index) => {
+                    return <li key={index}>{item} <span className='del' onClick={() => handleRemoveSize(item)}><i className='bx bx-minus'></i></span></li>
+                  })}
+                </ul>
+              </Col>
+              <Col xs={3}>
+              <Form.Group controlId="color">
+                <Form.Label className='mt-3'>Color  <span className='add' onClick={() => setColorAdd(true)}><i className='bx bx-plus' ></i></span></Form.Label>
+                <Form.Control  onChange={handleChangeColor} onKeyDown={handleKeyDownColor} value={color ? color : ''} type="text" style={{display: colorAdd ? 'block' : 'none'}}></Form.Control>
+              </Form.Group>
+                <ul>
+                  {dataEdit?.color?.map((item, index) => {
+                    return <li key={index}>{item} <span className='del' onClick={() => handleRemoveColor(item)}><i className='bx bx-minus'></i></span></li>
+                  })}
+                </ul>
+              </Col>
+            </Row>
+            
 
-            <Form.Label className='mt-3'>Description</Form.Label>
-            <Form.Control type='text' value={dataEdit?.description}  onChange={handleChangeDescription} />
+            
+
+            
+
+            
+
+            {/* <Form.Label className='mt-3'>Image</Form.Label>
+            <Form.Control type='number' value={dataEdit?.image} onChange={handleChangeImage} /> */}
+
+            
+
 
 
             <Button className='mt-5' onClick={handleSubmit}>Submit</Button>
