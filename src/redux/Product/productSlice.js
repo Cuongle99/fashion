@@ -28,8 +28,33 @@ export const editProduct = createAsyncThunk(
     "products/editProduct",
     async (arg, thunkApi) => {
         try {
-            console.log(arg);
             const res = await customAxios.patch(`/products/${arg.id}.json`, arg.dataEdit)
+            thunkApi.dispatch(getListProduct())
+            return res.data
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)
+
+export const deleteProduct = createAsyncThunk(
+    "products/deleteProduct",
+    async (arg, thunkApi) => {
+        try {
+            const res = await customAxios.delete(`/products/${arg}.json`)
+            thunkApi.dispatch(getListProduct());
+            return res.data
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)
+
+export const addProduct =  createAsyncThunk(
+    "products/addProduct",
+    async (arg, thunkApi) => {
+        try {
+            const res = await customAxios.post(`/products.json`, arg);
             thunkApi.dispatch(getListProduct())
             return res.data
         } catch (error) {
